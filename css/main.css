@@ -1,0 +1,902 @@
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+html {
+    color: #222;
+    font-size: 1em;
+    line-height: 1.4;
+}
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * Vendor-prefixed and regular ::selection selectors cannot be combined:
+ * https://stackoverflow.com/a/16982510/7133471
+ *
+ * Customize the background color to match your design.
+ */
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #0000001f;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+/* ==========================================================================
+   Browser Upgrade Prompt
+   ========================================================================== */
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+html {
+    scroll-behavior: smooth;
+}
+.main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    height: 60px;
+    margin-bottom: 60px;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(242,242,242,1)), to(rgba(242,242,242,0.7)));
+    box-shadow: 0 1px 16px 2px #b9b9b9;
+    z-index: 99;
+}
+.main-header nav {
+    width: 500px;
+}
+.header-nav {
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+    line-height: 60px;
+    list-style: none;
+}
+.header-nav__link {
+    display: block;
+    color: #222;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.1s;
+}
+.header-nav__link:focus,
+.header-nav__link:hover {
+    transform: scale(1.35);
+    outline: none;
+    color: inherit;
+    text-decoration: none;
+}
+.header-logo {
+    display: block;
+    padding-left: 20px;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+    font-size: 20px;
+    font-weight: normal;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+.header-logo--replacement {
+    display: none;
+    padding-left: 20px;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+    font-size: 20px;
+    font-weight: normal;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+blockquote.mantra {
+    margin: 0;
+    margin-bottom: 90px;
+    background: #f5f5f5;
+    color: #131314;
+    padding: 30px 30px 30px 90px;
+    position: relative;
+    font-family: 'Lato', sans-serif;
+}
+
+blockquote.mantra:after {
+    content: "";
+    width: 4px;
+    background: #eeeeee;
+    position: absolute;
+    left: 70px;
+    top: 20px;
+    bottom: 20px;
+}
+blockquote.mantra p {
+    margin-top: 0;
+    font-size: 24px;
+    font-weight: 300;
+}
+blockquote.mantra cite {
+    font-style: normal;
+}
+
+
+
+
+.receiver,
+.send-report {
+    position: relative;
+    width: 60%;
+    margin: 0 auto 80px auto;
+    transition: all 0.4s ease-in-out;
+}
+.receiver label,
+.send-report label {
+    position: absolute;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.5);
+    top: -3px;
+    left: 12px;
+    z-index: -1;
+    transition: .15s all ease-in-out;
+}
+.receiver input,
+.send-report input{
+    box-sizing: border-box;
+    font-size: 23px;
+    font-weight: bold;
+    width: 100%;
+    padding: 15px 0 16px 12px;
+    color: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    transition: .15s all ease-in-out;
+    background: white;
+}
+.receiver input:focus,
+.send-report input:focus {
+    outline: none;
+    transform: scale(1.05);
+}
+.receiver input:focus::placeholder,
+.send-report input:focus::placeholder {
+    font-size: 0;
+}
+.receiver input:focus + label,
+.send-report input:focus + label {
+    font-size: 17px;
+    transform: translateY(-24px) translateX(-12px);
+}
+.receiver input::-webkit-input-placeholder,
+.send-report input::-webkit-input-placeholder{
+    font-size: 19px;
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: 100;
+}
+.receiver-btn {
+    display: block;
+    margin: 0 auto;
+    min-width: 170px;
+    padding: 7px;
+    text-align: center;
+    font-size: 24px;
+    background-color: #f5f5f5;
+}
+
+
+/*not hover*/
+.receiver.completed:hover {
+    margin-bottom: 0;
+}
+
+
+
+
+.btn {
+    color: #222222;
+    position: relative;
+    display: block;
+    width: 250px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transform-style: flat;
+    transition: all 250ms ease-out;
+}
+.btn:before, .btn:after {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    transition: all 250ms ease-out;
+}
+.paper-raise-flatten {
+    border-color: #fff;
+    box-shadow: none;
+}
+.paper-raise-flatten:before {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /*box-shadow: 0 15px 10px -10px rgba(31, 31, 31, 0.5);*/
+    box-shadow: 0 1px 16px 2px #b9b9b9;
+}
+.paper-raise-flatten:hover {
+    border-color: #dedede;
+}
+.paper-raise-flatten:hover:before {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(128, 128, 128, 0.1) inset;
+}
+.paper {
+    /*box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(128, 128, 128, 0.1) inset;*/
+    border-color: #dedede;
+}
+
+
+/*scroll*/
+::-webkit-scrollbar {
+    height: 10px;
+    width: 6px;
+    background: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c7beba;
+    -webkit-border-radius: 1ex;
+    -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+}
+
+::-webkit-scrollbar-corner {
+    background: #fff;
+}
+
+
+
+
+.main-container {
+    flex-grow: 1;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 900px;
+    padding: 0 20px;
+    text-align: justify;
+    /*border-left: 1px solid #f5f2f0;*/
+    /*border-right: 1px solid #f5f2f0;*/
+}
+.specification {
+    margin-bottom: 60px;
+    word-spacing: 0.05em;
+    line-height: 1.6em;
+}
+.specification-title {
+    margin-top: 70px;
+    margin-bottom: 50px;
+    font-size: 30px;
+    font-weight: 400;
+    text-align: center;
+}
+.dot-animated {
+    will-change: opacity;
+    font-size: 25px;
+    animation-name: blink;
+    animation-duration: 1.4s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+}
+.dot-animated:nth-child(2) {
+    animation-delay: .2s;
+}
+
+.dot-animated:nth-child(3) {
+    animation-delay: .4s;
+}
+.comments {
+    margin: 0 auto;
+    margin-bottom: 400px;
+    max-width: 900px;
+    width: 100%;
+}
+
+
+/*Анимация отключается при парсинге*/
+.parse-robots {
+    display: none;
+    height: 35px;
+}
+.parse-robots b {
+    font-weight: normal;
+}
+
+
+/*.compiled-title {*/
+    /*display: block;*/
+    /*margin-bottom: 20px;*/
+    /*text-align: center;*/
+    /*font-size: 24px;*/
+    /*font-weight: normal;*/
+/*}*/
+
+/*.compiled-text {*/
+    /*width: 60%;*/
+    /*margin: 0 auto 40px auto;*/
+/*}*/
+
+
+
+/* ==========================================================================
+   Progress bar
+   ========================================================================== */
+@-webkit-keyframes progress-bar-animate {
+    from {
+        background-position: 40px 0;
+    }
+    to {
+        background-position: 0 0;
+    }
+}
+@keyframes progress-bar-animate {
+    from {
+        background-position: 40px 0;
+    }
+    to {
+        background-position: 0 0;
+    }
+}
+.progress-bar {
+    overflow: hidden;
+    height: 20px;
+    border-radius: 10px;
+    background-image: -webkit-linear-gradient(top, #ccc 0%, #ddd 100%);
+    background-image: linear-gradient(to bottom, #ccc 0%, #ddd 100%);
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.progress-line {
+    width: 0%;
+    height: 100%;
+    float: left;
+    box-sizing: border-box;
+    background-color: #79b;
+    background-size: 40px 40px;
+    border-radius: 10px 0 0 10px;
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.2) 30%, rgba(0, 0, 0, 0.1) 30%, rgba(0, 0, 0, 0.1) 33%, transparent 33%, transparent 46%, rgba(0, 0, 0, 0.1) 46%, rgba(0, 0, 0, 0.1) 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 80%, rgba(0, 0, 0, 0.1) 80%, rgba(0, 0, 0, 0.1) 83%, transparent 83%, transparent 97%, rgba(0, 0, 0, 0.1) 97%, rgba(0, 0, 0, 0.1));
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.2) 30%, rgba(0, 0, 0, 0.1) 30%, rgba(0, 0, 0, 0.1) 34%, transparent 34%, transparent 46%, rgba(0, 0, 0, 0.1) 46%, rgba(0, 0, 0, 0.1) 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 80%, rgba(0, 0, 0, 0.1) 80%, rgba(0, 0, 0, 0.1) 84%, transparent 84%, transparent 96%, rgba(0, 0, 0, 0.1) 96%, rgba(0, 0, 0, 0.1));
+    -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    -webkit-transition: width 200ms ease;
+    -moz-transition: width 200ms ease;
+    -o-transition: width 200ms ease;
+    transition: width 200ms ease;
+    -webkit-animation: progress-bar-animate 2s linear infinite;
+    animation: progress-bar-animate 2s linear infinite;
+}
+
+
+
+
+.hljs {
+    padding: 0;
+}
+/*Symfony*/
+/*Code design*/
+
+.inline-sample {
+    padding: 2px 4px;
+    background: #f5f2f0;
+    border-radius: 2px;
+    font-family: 'Ubuntu', 'Roboto', sans-serif;
+    white-space: nowrap;
+}
+/*Code design*/
+
+
+/*markup design*/
+.code-sample {
+    display: flex;
+}
+.code-sample code {
+    flex-grow: 1;
+    line-height: 1.5;
+    background: #f5f2f0;
+}
+
+/*.nowrap {*/
+/*    white-space: nowrap;*/
+/*}*/
+.enumeration {
+    margin: 0;
+    list-style: none;
+}
+.symfony p {
+    margin: 10px 0;
+    /*text-indent: 2em;*/
+}
+.symfony h3 {
+    font-size: 24px;
+}
+.symfony h2 {
+    font-size: 32px;
+}
+.symfony .enumeration__title {
+    font-size: 18px;
+}
+.symfony-link {
+    position: relative;
+    text-decoration: none;
+    color: #222222;
+    font-weight: 600;
+}
+.symfony-link:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    border-radius: 3px;
+    background-color: #222222;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: 0.2s;
+}
+.symfony-link:hover,
+.symfony-link:focus,
+.symfony-link:active {
+    color: #ce1d1d;
+    transition: 0.2s;
+}
+.symfony-link:hover:after,
+.symfony-link:focus:after,
+.symfony-link:active:after {
+    background-color: #222222;
+    bottom: -2px;
+}
+.symfony-image,
+a.fancybox {
+    display: block;
+    padding: 20px 0;
+    max-width: 500px;
+}
+.symfony-image {
+    padding: 0;
+}
+dl.descriptions-list {
+    display: flex;
+    flex-flow: row wrap;
+    border-width: 1px 1px 0 0;
+}
+.descriptions-list dt {
+    flex-basis: 15%;
+    margin-bottom: 5px;
+    padding: 2px 4px;
+    background: #f5f2f0;
+    text-align: left;
+    color: #222;
+    border-bottom: 1px solid #f5f2f0;
+}
+.descriptions-list dd {
+    flex-basis: 70%;
+    margin: 0;
+    margin-bottom: 5px;
+    flex-grow: 1;
+    padding: 2px 4px;
+    border-bottom: 1px solid #f5f2f0;
+}
+
+/*pages nav*/
+.page-nav__prev,
+.page-nav__next {
+    position: fixed;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    text-decoration: none;
+    font-size: 45px;
+    color: #7d7d7d;
+}
+.page-nav__prev:hover,
+.page-nav__prev:focus,
+.page-nav__prev:active,
+.page-nav__next:hover,
+.page-nav__next:focus,
+.page-nav__next:active {
+    background-color: #f5f2f0;
+    transition: 0.2s;
+    outline: none;
+}
+.page-nav__prev {
+    position: fixed;
+    left: 0;
+    -webkit-transform: translateX(250px);
+    transform: translateX(250px);
+}
+.page-nav__prev:before {
+    content: "\2039";
+    transform: translateY(-3px);
+}
+.page-nav__next {
+    position: fixed;
+    right: 0;
+    -webkit-transform: translateX(-250px);
+    transform: translateX(-250px);
+}
+.page-nav__next:before {
+    content: "\203A";
+    transform: translateY(-3px);
+}
+
+
+.page_nav:hover,
+.page_nav:focus,
+.page_nav:active {
+    background-color: #f5f2f0;
+    transition: 0.2s;
+    outline: none;
+}
+.page_nav--prev {
+    position: fixed;
+    left: 0;
+    -webkit-transform: translateX(250px);
+    transform: translateX(250px);
+}
+.page_nav--prev:before {
+    content: "\2039";
+    transform: translateY(-3px);
+}
+.page_nav--next {
+    position: fixed;
+    right: 0;
+    -webkit-transform: translateX(-250px);
+    transform: translateX(-250px);
+}
+.page_nav--next:before {
+    content: "\203A";
+    transform: translateY(-3px);
+}
+/*Pages navigation*/
+
+
+/*breadcrumbs*/
+.breadcrumbs__list {
+    display: flex;
+    padding: 0;
+    list-style: none;
+}
+.breadcrumbs__item {
+    position: relative;
+    margin-right: 25px;
+}
+.breadcrumbs__item:not(:last-child):after {
+    content: "\203A";
+    position: absolute;
+    right: -14px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    font-size: 19px;
+    width: 6px;
+    height: 28px;
+}
+.breadcrumbs__link {
+    padding: 7px 0;
+    color: #222;
+    font-weight: 600;
+    text-decoration: none;
+}
+/*breadcrumbs*/
+
+/*markup design*/
+
+
+/*table of contents*/
+.themes {
+    border-radius: 6px;
+    border: 4px solid #f5f2f0;
+    background: #fff;
+}
+.themes-list {
+    margin: 0;
+}
+.themes-list li {
+    padding: 14px 20px 12px 25px;
+    border-bottom: 1px solid #ede8e0;
+}
+.themes-list li:last-child {
+    border-bottom: none;
+}
+.themes-list a {
+    text-decoration: none;
+}
+/*table of contents*/
+
+
+
+
+/*Pages*/
+
+/*introduction*/
+.intro-greeting {
+    margin-bottom: 50px;
+}
+.intro-training {
+    margin-bottom: 40px;
+}
+.intro-demo {
+    margin-top: 20px;
+}
+.postscriptum {
+    border-top: 1px solid #f5f2f0;
+    padding-top: 10px;
+    border-bottom: 1px solid #f5f2f0;
+    padding-bottom: 10px;
+    font-style: italic;
+    font-family: 'Arial', sans-serif;
+}
+
+/*before install*/
+.before-install__installer {
+    margin: 20px 0;
+}
+
+/*twig*/
+p.twig-container {
+    margin: 20px 0;
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers
+ */
+
+.hidden {
+    display: none !important;
+}
+
+/*
+ * Hide only visually, but have it available for screen readers:
+ * https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ *
+ * 1. For long content, line feeds are not interpreted as spaces and small width
+ *    causes content to wrap 1 word per line:
+ *    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    white-space: nowrap; /* 1 */
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+    white-space: inherit;
+}
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+@keyframes blink {
+    0% {
+        opacity: .2;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        opacity: .2;
+    }
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+       (min-resolution: 1.25dppx),
+       (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   https://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+@media print {
+    *,
+    *:before,
+    *:after {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre {
+        white-space: pre-wrap !important;
+    }
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    /*
+     * Printing Tables:
+     * http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}

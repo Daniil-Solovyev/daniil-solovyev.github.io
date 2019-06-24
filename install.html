@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Установка | Symfony 4</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/fonts/default.css">
+    <link rel="stylesheet" href="css/symfony/layout.css">
+    <link rel="stylesheet" href="css/symfony/styles.css">
+    <link rel="stylesheet" href="css/jquery.fancybox.css">
+
+</head>
+<body>
+<header class="main-header">
+    <b class="logo">Symfony 4</b>
+    <nav class="main-nav">
+        <ul class="main-nav__list">
+            <li> <a class="main-nav__link" href="index.html">Home</a> </li>
+            <li> <a class="main-nav__link" href="feedback.html">Feedback</a> </li>
+            <li> <a class="main-nav__link" href="#">Author</a> </li>
+        </ul>
+    </nav>
+</header>
+<main class="main-container">
+
+    <nav class="breadcrumbs">
+        <ul class="breadcrumbs__list">
+            <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="index.html">Symfony</a>
+            </li>
+            <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="#">Install</a>
+            </li>
+        </ul>
+    </nav>
+
+    <h1 class="visuallyhidden">Install Symfony</h1>
+
+    <section class="symfony install">
+        <h2>Установка</h2>
+        <p class="symfony__text">
+            Сразу перейдем к делу и введем в консоли <code class="inline-sample execution">composer create-project symfony/skeleton имя_вашего_проекта</code>.
+            После продолжительной установки перейдем в папку с проектом, в моем случае - <code class="inline-sample execution">cd twitter</code>.
+        </p>
+        <p class="symfony__text">
+            Теперь развернем локальный сервер. Если вам удобнее, можете сделать это через OpenServer, XAMPP,
+            да хоть на хостинге, входной скрипт лежит в папке public. Мне больше нравится идея
+            использования <b>рецепта веб-сервера</b>, как бы странно это ни звучало.
+            В консоли напишем - <code class="inline-sample execution">composer require server</code>.
+        </p>
+
+        <!--    <p class="postscriptum">-->
+        <!--        Кто привык – может сделать это через OpenServer, XAMPP, да хоть на хостинге.-->
+        <!--        Входной скрипт лежит в папке public. Мы же будем использовать для этого рецепт веб-сервера,-->
+        <!--        как бы странно это не звучало. В консоли - <code class="inline-sample">composer require server</code>.-->
+        <!--    </p>-->
+
+        <p class="symfony__text">
+            После установки сервера нужно его запустить. Для этого существуют две команды -
+            <code class="inline-sample">php bin/console server:run</code> и
+            <code class="inline-sample">php bin/console server:start</code>.
+            Разница в том, что после запуска первой команды консоль будет вам недоступна
+            (хотя никто не мешает открыть второе окно), а во втором наоборот.
+            Поскольку мне привычнее перезапускать сервер после каких-либо обновлений, буду использовать
+            <code class="inline-sample">php bin/console server:run</code>.
+            После запуска сервера ваш сайт будет расположен по адресу, который выплюнула консоль.
+            К слову, остановить работу сервера можно с помощью Ctrl+C.
+            <a class="fancybox" href="img/symfony/install/server_start.jpg">
+                <img class="symfony-image" src="img/symfony/install/server_start.jpg" alt="Start local server">
+            </a>
+            Перейдем по указанному адресу и убедимся в работоспособности:
+            <a class="fancybox" href="img/symfony/install/server_run.jpg">
+                <img class="symfony-image" src="img/symfony/install/server_run.jpg" alt="Local server run">
+            </a>
+        </p>
+    </section>
+
+    <hr>
+
+    <section class="symfony structure">
+        <h2>Структура папок</h2>
+        <p class="symfony__text">
+            В процессе работы вы быстро привыкнете к тому, что где располагается,
+            но все-таки краткое описание к знакомству обязательно.
+        </p>
+
+        <dl class="descriptions-list">
+            <dt><b>bin</b></dt>
+            <dd>
+                Как уже можно было понять по команде <code class="inline-sample">php bin/console server:run</code>
+                в данной папке лежат консольные скрипты. Достаточно часто мы будем вызывать отсюда maker –
+                удобная вещь для генерации контроллеров, форм, миграций и т.д.
+            </dd>
+
+            <dt><b>config</b></dt>
+            <dd>
+                Название говорит само за себя. Располагаются здесь конфигурационные файлы, в основном формата yaml.
+            </dd>
+
+            <dt><b>public</b></dt>
+            <dd>Расположение входного скрипта index.php. Сюда же поместим css, js, img.</dd>
+
+            <dt><b>src</b></dt>
+            <dd>
+                Большую часть времени мы будем проводить в текущей директории. Здесь расположение контроллеров,
+                шаблонов, сущностей, репозиториев.
+            </dd>
+
+            <dt><b>var</b></dt>
+            <dd>Кеш и логи.</dd>
+
+            <dt><b>vendor</b></dt>
+            <dd>Все что подключается через composer.</dd>
+
+            <dt><b>.env</b></dt>
+            <dd>Еще один конфигурационный файл. Настраивать подключение к БД, данные для mailer'а будем именно здесь.</dd>
+        </dl>
+    </section>
+
+    <hr>
+
+    <section class="symfony plugins">
+        <h2>Плагины для PhpStorm</h2>
+        <p class="symfony__text">
+            Для работы с Symfony в PhpStorm существуют достаточно популярные и удобные плагины, которые
+            добавят автокомплиты, подсказки по шаблонизатору, поддержку аннотаций и многое другое.
+            Для установки необходимо перейти в <code class="inline-sample">File => Settings => Plugins</code>
+            и ввести в поиске "Symfony". Вместе с "Symfony Plugin" будет так же предложено установить "annotations".
+            <a class="fancybox" href="img/symfony/install/plugins.jpg">
+                <img class="symfony-image" src="img/symfony/install/plugins.jpg" alt="Local server run">
+            </a>
+        </p>
+
+        <p class="symfony__text">
+            После установки так же стоит поменять путь <code class="inline-sample">Web Directory</code>
+            с <b>web</b> на <b>public</b>. <br>
+            Далее включить плагины, посредством установки чекбокса, и перезапустить IDE.
+            <a class="fancybox" href="img/symfony/install/enable_plugin.jpg">
+                <img class="symfony-image" src="img/symfony/install/enable_plugin.jpg" alt="Local server run">
+            </a>
+        </p>
+    </section>
+
+    <div class="page-nav">
+        <a tabindex="2" href="before-install.html" class="page-nav__prev" title="Previous page"></a>
+        <a tabindex="1" href="database.html" class="page-nav__next" title="Nex page"></a>
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script>
+
+        var disqus_config = function () {
+            this.page.url = 'https://daniil-solovev.github.io/';
+            this.page.identifier = 'install';
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://symfony-1.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</main>
+<!--<footer>-->
+<!--    Footer-->
+<!--</footer>-->
+<script src="js/jquery.js"></script>
+<script src="js/jquery.fancybox.pack.js"></script>
+<script src="js/highlight.pack.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

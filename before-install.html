@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Начало установки | Symfony 4</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/fonts/default.css">
+    <link rel="stylesheet" href="css/symfony/layout.css">
+    <link rel="stylesheet" href="css/jquery.fancybox.css">
+    <link rel="stylesheet" href="css/symfony/styles.css">
+</head>
+<body>
+<header class="main-header">
+    <b class="logo">Symfony 4</b>
+    <nav class="main-nav">
+        <ul class="main-nav__list">
+            <li> <a class="main-nav__link" href="index.html">Home</a> </li>
+            <li> <a class="main-nav__link" href="feedback.html">Feedback</a> </li>
+            <li> <a class="main-nav__link" href="#">Author</a> </li>
+        </ul>
+    </nav>
+</header>
+<main class="main-container">
+
+    <nav class="breadcrumbs">
+        <ul class="breadcrumbs__list">
+            <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="index.html">Symfony</a>
+            </li>
+            <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="#">beforeInstall</a>
+            </li>
+        </ul>
+    </nav>
+
+    <h1 class="visuallyhidden">Before Symfony Install</h1>
+
+    <section class="symfony before-install">
+        <h2>beforeInstall</h2>
+
+        <div class="enumeration">
+            <p class="enumeration__title">Symfony предлагает два варианта установки:</p>
+            <ul class="enumeration__list">
+                <!--            <li>- installer</li>-->
+                <li>- skeleton;</li>
+                <li>- website-skeleton.</li>
+            </ul>
+        </div>
+
+        <div class="enumeration">
+            <ul class="enumeration__list">
+                <!--            <li>-->
+                <!--                <p class="before-install__installer">-->
+                <!--                    <strong>installer</strong> - хоть этот вариант и существует,-->
+                <!--                    но сами разработчики объявили его «deprecated». Фреймворк рекомендуется устанавливать через composer.-->
+                <!--                    Ну а вообще представляет он из себя exe'шник, который производит распаковку фреймворка с указанными параметрами.-->
+                <!--                </p>-->
+                <!--            </li>-->
+                <li>
+                    <p class="postscriptum before-install__installer">
+                        Разница заключается лишь в наборе подключаемых компонентов.
+                        Достаточно взглянуть на composer.json каждого из пакетов.
+                    </p>
+                </li>
+                <li>
+                    <p class="before-install__installer">
+                        <strong>skeleton</strong> - ваш выбор, если стоит задача создать API, микросервис или консольное
+                        приложение. По сути это минимальный
+                        <a class="symfony-link" target="_blank" href="https://github.com/symfony/skeleton/blob/master/composer.json">набор компонентов</a>,
+                        ничего лишнего, подключаете все по необходимости. Далее в уроках, мы будем разрабатывать именно на нем,
+                        попутно ознакамливаясь с подключаемыми пакетами.
+                    </p>
+                </li>
+                <li>
+                    <p class="before-install__installer">
+                        <strong>website-skeleton</strong> - подготовлен для создания традиционного веб-приложения.
+                        Все, что мы будем подключать через composer отдельно – тут уже в наличии.
+                        Какие компоненты входят по умолчанию можно посмтреть
+                        <a class="symfony-link" target="_blank" href="https://github.com/symfony/website-skeleton/blob/master/composer.json">здесь</a>.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <hr>
+
+    <section class="symfony flex">
+        <h2>Symfony Flex</h2>
+        <p class="symfony__text">
+            Flex, как говорится в документации –
+            <cite>«Это новый способ установки и управления приложениями Symfony»</cite>.
+            По сути представляет из себя обычный плагин composer.
+            Орудует этот плагин «рецептами», которые в свою очередь подтягиваются с сайта
+            <a target="_blank" class="symfony-link" href="https://flex.symfony.com">https://flex.symfony.com</a>.
+            <a class="fancybox" href="img/symfony/before-install/flex.jpg">
+                <img class="symfony-image" src="img/symfony/before-install/flex.jpg" alt="">
+            </a>
+        </p>
+        <p class="symfony__text">
+            Например, вам необходимо подключить библиотеку для работы с почтой (swiftmailer или аналог).
+            Обычно в такой ситуации пишут в консоли
+            <code class="inline-sample">composer require swiftmailer/swiftmailer</code>, после чего
+            composer тянет с сайта
+            <a target="_blank" class="symfony-link" href="https://packagist.org">https://packagist.org</a>
+            библиотеку по принципу vendor/package-name. В Symfony такой вариант подключения будет работать точно так же,
+            как и везде, но все же есть вариант получше. Здесь мы напишем <code class="inline-sample">composer require mailer</code>.
+        </p>
+        <p class="symfony__text">
+            Дальше происходит следующее - <b>Flex</b> начнет искать рецепт «mailer» на сайте
+            <a target="_blank" class="symfony-link" href="https://flex.symfony.com">https://flex.symfony.com</a> и,
+            если рецепт с таким псевдонимом существует, начнет подтягивать его в ваш проект.
+            Но расположит он его не только лишь в папке vendor, но и может закинуть в
+            проект какие-то компоненты, шаблоны, изменить конфиги и что-нибудь еще согласно рецепту,
+            попутно обновив symfony.lock. Список алиасов можете увидеть в окне с рецептом.
+            <a class="fancybox" href="img/symfony/before-install/aliases2.jpg">
+                <img class="symfony-image" src="img/symfony/before-install/aliases2.jpg" alt="Flex aliases">
+            </a>
+            Как создать свой рецепт, да и почитать подробнее можно в документации.
+            Поскольку мы будем использовать именно skeleton&ndash;приложение, нам предстоит установить несколько десятков рецептов.
+            Ну а поскольку мы учимся - воспринимайте это как опыт, а не рутину.
+        </p>
+    </section>
+
+    <div class="page-nav">
+        <a tabindex="2" href="intro.html" class="page-nav__prev" title="Previous page"></a>
+        <a tabindex="1" href="install.html" class="page-nav__next" title="Nex page"></a>
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script>
+
+        var disqus_config = function () {
+            this.page.url = 'https://daniil-solovev.github.io/';
+            this.page.identifier = 'before-install';
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://symfony-1.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</main>
+<!--<footer>-->
+<!--    Footer-->
+<!--</footer>-->
+<script src="js/jquery.js"></script>
+<script src="js/jquery.fancybox.pack.js"></script>
+<script src="js/highlight.pack.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>FOSUserBundle | Symfony 4</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/fonts/default.css">
+    <link rel="stylesheet" href="css/symfony/layout.css">
+    <link rel="stylesheet" href="css/symfony/styles.css">
+    <link rel="stylesheet" href="css/jquery.fancybox.css">
+
+</head>
+<body>
+<header class="main-header">
+    <b class="logo">Symfony 4</b>
+    <nav class="main-nav">
+        <ul class="main-nav__list">
+            <li> <a class="main-nav__link" href="index.html">Home</a> </li>
+            <li> <a class="main-nav__link" href="feedback.html">Feedback</a> </li>
+            <li> <a class="main-nav__link" href="#">Author</a> </li>
+        </ul>
+    </nav>
+</header>
+<main class="main-container">
+
+    <div class="feedback">
+
+        <form method="post" action="https://formspree.io/frontend.servise@gmail.com">
+
+            <label for="feedback-theme" class="feedback-label">Тема</label>
+            <input id="feedback-theme" name="feedback-theme" type="text" class="feedback-input" required>
+
+            <label for="feedback-email" class="feedback-label">E-mail</label>
+            <input id="feedback-email" name="feedback-email" type="text" class="feedback-input" required>
+
+            <label for="feedback-text" class="feedback-label">Текст</label>
+            <textarea id="feedback-text" class="feedback-area" name="feedback-text" rows="6" required></textarea>
+
+            <div class="form-group form-confirm">
+
+                <button type="submit" class="btn btn-animate">
+                    <svg>
+                        <rect x="0" y="0" fill="none" width="130" height="55" />
+                    </svg>
+                    Написать
+                </button>
+
+                <button type="reset" class="btn btn-animate">
+                    <svg>
+                        <rect x="0" y="0" fill="none" width="130" height="55" />
+                    </svg>
+                    Очистить
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+<!--<footer>-->
+<!--    Footer-->
+<!--</footer>-->
+<script src="js/jquery.js"></script>
+<script src="js/jquery.fancybox.pack.js"></script>
+<script src="js/highlight.pack.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

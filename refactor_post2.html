@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Дорабатываем новости, часть 2 | Symfony 4</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/fonts/default.css">
+    <link rel="stylesheet" href="css/symfony/layout.css">
+    <link rel="stylesheet" href="css/symfony/styles.css">
+    <link rel="stylesheet" href="css/jquery.fancybox.css">
+
+</head>
+<body>
+<header class="main-header">
+    <b class="logo">Symfony 4</b>
+    <nav class="main-nav">
+        <ul class="main-nav__list">
+            <li> <a class="main-nav__link" href="index.html">Home</a> </li>
+            <li> <a class="main-nav__link" href="feedback.html">Feedback</a> </li>
+            <li> <a class="main-nav__link" href="#">Author</a> </li>
+        </ul>
+    </nav>
+</header>
+<main class="main-container">
+
+    <nav class="breadcrumbs">
+        <ul class="breadcrumbs__list">
+            <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="index.html">Symfony</a>
+            </li>
+            <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="#">Completion of posts 2</a>
+            </li>
+        </ul>
+    </nav>
+
+    <h1 class="visuallyhidden">Completion of posts, part 2</h1>
+
+    <section class="symfony refactor">
+        <h2>Дорабатываем вывод новостей, часть 2</h2>
+
+        <p class="symfony__text">
+            Работа с формами - одна из самых частых задач встречающихся на пути web-разработчика. Необходимо хорошо знать
+            возможности форм, уметь выстраивать их в нужной последовательности и понимать принципы работы. Тема эта
+            сама по себе большая. Данный курс все же руководствуется шаблоном "быстрый старт", поэтому в данной главе мы разберем
+            именно тот вариант работы с формой, который будет удобен в учебном проекте. Но я настоятельно рекомендую вам
+            познакомиться с этой темой как можно лучше.
+            <a class="symfony-link" href="https://symfony.ru/doc/current/forms.html">Тема в документации</a>
+        </p>
+
+        <p class="symfony__text">
+            Мы будем создавать форму на основе сущности Post. Для ее генерации все так же воспользуемся <b>maker'ом</b>.
+            В консоли пишем <code class="inline-sample">php bin/console make:form</code> и далее имя формы.
+            <a class="fancybox" href="img/symfony/complite_post2/create_form.jpg">
+                <img class="symfony-image" src="img/symfony/complite_post2/create_form.jpg" alt="Local server run">
+            </a>
+        </p>
+
+        <p class="symfony__text">
+            В директории <code class="inline-sample">src=>Form</code> теперь лежит форма PostType.
+            Представляет она из себя методы <code class="inline-sample">configureOptions</code> - указывающий на пренадлежность
+            формы к сущности, <code class="inline-sample">buildForm</code> - билдер формы, в котором будем ее описывать.
+            <!--        <a class="fancybox" href="<?= Yii::getAlias('@web') ?>/img/symfony/complite_post2/src_form.jpg">-->
+            <!--            <img class="symfony-image" src="<?= Yii::getAlias('@web') ?>/img/symfony/complite_post2/src_form.jpg" alt="Local server run">-->
+            <!--        </a>-->
+        </p>
+
+        <p class="symfony__text">
+            Теперь немного изменим форму. Строку <code class="inline-sample">add('likes')</code> можно закоментировать,
+            лайки будут ставить пользователи. Поле <code class="inline-sample">body</code>
+            будет представлять из себя <b>textarea</b>, что мы и укажем.
+            <a class="fancybox" href="img/symfony/complite_post2/change_form.jpg">
+                <img class="symfony-image" src="img/symfony/complite_post2/change_form.jpg" alt="Local server run">
+            </a>
+        </p>
+
+        <p class="postscriptum">
+            Обратите внимание на namespace Textarea, должен быть указан следующий
+            <code class="inline-sample">use Symfony\Component\Form\Extension\Core\Type\TextareaType</code>.
+        </p>
+
+        <p class="symfony__text">
+            Теперь перейдем к контроллеру. Создадим метод <code class="inline-sample">createPost</code>,
+            и разберем что в нем есть.
+        </p>
+
+        <pre class="code-sample">
+        <code class="php">
+    use Symfony\Component\HttpFoundation\Request;
+    use App\Form\PostType;
+
+    /**
+     * @Route("/create_post", name="create_post")
+     */
+    public function createPost(Request $request)
+    {
+        $post = new Post();
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($post);
+            $em->flush();
+
+            return $this->redirect('/');
+        }
+
+        return $this->render('post/create.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+        </code>
+    </pre>
+
+        <p class="symfony__text">
+            Первое, на что стоит обратить внимание это аргумент самого метода - <code class="inline-sample">Request</code>.
+            Напомню, что Symfony представляет из себя HTTP фреймворк, данные он получает из класса Request и отдаёт в виде Response.
+            Ответ мы принимаем переменной <code class="inline-sample">Request $request</code>, а методом
+            <code class="inline-sample">$form->handleRequest($request)</code> ниже по коду
+            его обрабатываем, получая имя формы, метод и т.д.
+
+
+            <!--        Теперь перейдем к контроллеру. Создаем метод <code class="inline-sample">createPost</code>, агруметом которого-->
+            <!--        будет оъект Request с namespace <code class="inline-sample">Symfony\Component\HttpFoundation\Request</code>.-->
+        </p>
+
+        <p class="symfony__text">
+            Я надеюсь никто из вас не возненавидит меня, в конце концов мы же учимся... Просто дело в том, что подключив
+            <b>maker</b>, мы имели возможность сгенерировать CRUD. Делается это просто на самом деле
+            <code class="inline-sample">php bin/console make:crud</code>.
+        </p>
+
+
+        <p class="postscriptum">
+            Обратите внимание на <code class="inline-sample">use App\Entity\Post</code> и
+            <code class="inline-sample">use Faker\Factory</code>. Массив с постами можно пока оставить.
+
+        </p>
+
+        <p class="symfony__text">
+            Вот что получилось:
+            <a class="fancybox" href="img/symfony/complite_post/faker_example.jpg">
+                <img class="symfony-image" src="img/symfony/complite_post/faker_example.jpg" alt="Local server run">
+            </a>
+        </p>
+
+        <div class="enumeration">
+            <p class="enumeration__title">Что здесь происходит?</p>
+            <ul class="enumeration__list">
+                <li>
+                    - с помощью <code class="inline-sample">$manager = $this->getDoctrine()->getManager()</code>
+                    мы инициировали менеджер объекта для конкретной сущности, в нашем случае это Post.
+                    Он отвечает за сохранение объектов и выборку объектов из базы данных.
+                </li>
+                <li>
+                    - метод <strong>persist()</strong> в контексте <code class="inline-sample">$manager->persist($post)</code>
+                    выполняет подготовку запроса.
+                </li>
+                <li>
+                    - метод <strong>flush()</strong> в <code class="inline-sample">$manager->flush()</code> записывает в базу.
+                </li>
+            </ul>
+        </div>
+
+        <p class="symfony__text">
+            Осталось только обновить страницу, тем самым вызвав код на исполнение, и убедиться, что все работает.
+            Перейдем по маршруту /post (он же главная), тем самым вызвав работу faker. Проверяем БД:
+            <a class="fancybox" href="img/symfony/complite_post/fill_database.jpg">
+                <img class="symfony-image" src="img/symfony/complite_post/fill_database.jpg" alt="Local server run">
+            </a>
+            Если все прошло успешно - код faker'a в методе index можно удалить.
+        </p>
+    </section>
+
+    <hr>
+
+    <section class="symfony news">
+        <h2>Вывод всех новостей</h2>
+        <p class="symfony__text">
+            Когда мы генерировали сущность Post, вместе с ней был создан репозиторий PostRepository.
+            С его помощью мы будем составлять запросы к базе данных. Ну и предлагаю сразу же им воспользоваться.
+            Теперь массив с новостями смело можно удалять и написать в методе
+            <code class="inline-sample">$repository = $this->getDoctrine()->getRepository(Post::class)</code>.
+            Теперь нам доступны стандартные методы для выборки findBy, findAll, findOneBy и прочие.
+        </p>
+
+        <p class="postscriptum">
+            PostController наследуется от AbstractController, и не сразу можно заметить откуда
+            у него метод getDoctrine(). Кого-то может ввести в заблуждение, однако это достаточно частая практика.
+            Просто ниже используется use ControllerTrait.
+        </p>
+
+        <p class="symfony__text">
+            Собственно, применим <code class="inline-sample">findAll()</code> к репозиторию и выведем на страницу посты.
+            Добавляем в код <code class="inline-sample">$posts = $repository->findAll()</code>.
+            Обновляем страницу и наблюдаем свежесгенерированные новости.
+            <a class="fancybox" href="img/symfony/complite_post/getdoctrine.jpg">
+                <img class="symfony-image" src="img/symfony/complite_post/getdoctrine.jpg" alt="Local server run">
+            </a>
+        </p>
+
+        <p class="postscriptum">
+            <code class="inline-sample">$this->getDoctine()->getRepository(Post::class)</code>
+            и <code class="inline-sample">$this->getDoctine()->getManager()->getRepository(Post::class)</code> равносильны.
+            <!--        <a href="https://stackoverflow.com/questions/8316006/getentitymanager-and-getdoctrine-in-symfony2">ссылка</a>.-->
+        </p>
+    </section>
+
+    <section class="symfony current-post">
+        <h2>Просмотр одной новости</h2>
+        <p class="symfony__text">
+            Ранее, с помощью фильтра "truncate" мы ограничили отображаемое количество символов у новости в общем списке.
+            Теперь выведем на просмотр конкретную новость. Для этого создадим еще один метод в
+            <code class="inline-sample">PostController</code>, назовем его <code class="inline-sample">post</code>.
+        </p>
+
+        <pre class="code-sample">
+        <code class="php">
+    /**
+    * @param Post $post
+    * @return \Symfony\Component\HttpFoundation\Response
+    * @Route("/post/{id}", name="post")
+    */
+    public function post(Post $post)
+    {
+        return $this->render('post/show.html.twig', [
+            'post' => $post
+        ]);
+    }
+        </code>
+    </pre>
+
+        <p class="symfony__text">
+            Сначала обратим внимание на аннотации, а конкретно на <code class="inline-sample">@Route</code>.
+            После <code class="inline-sample">/post</code> добавился
+            параметр <code class="inline-sample">{id}</code>, а в выражении
+            <code class="inline-sample">public function post(Post $post)</code> мы получаем конкретный пост.
+            Ну и это все. Остается только немного поработать над шаблонами.
+        </p>
+
+        <p class="postscriptum">
+            Symfony конечно хороший фреймворк, но иногда там происходят паранормальные вещи.
+            Например, при попытке просмотра конкретного поста периодически (именно периодически) мне приходилось лизезреть
+            ошибку, якобы не существует сервиса Post. Решилось это, не менее странно, обновлением annotations -
+            <code class="inline-sample">composer require annotations</code>.
+        </p>
+
+        <p class="symfony__text">
+            В папке <code class="inline-sample">templates => post</code> создадим шаблон
+            <code class="inline-sample">show.html.twig</code>. Код можно взять <a class="symfony-link" href="#">здесь</a>.
+
+            <a class="fancybox" href="img/symfony/complite_post/show_post.jpg">
+                <img class="symfony-image" src="img/symfony/complite_post/show_post.jpg" alt="Local server run">
+            </a>
+
+            Теперь добавим ссылки под каждый пост в шаблоне <code class="inline-sample">index.html.twig</code>.
+            Ссылке <code class="inline-sample">Read more</code> добавляем в аттрибут <code class="inline-sample">href</code>
+            <code class="inline-sample">{{ path('post', {'id': post.id}) }}</code>. Проверяем.
+
+            <a class="fancybox" href="img/symfony/complite_post/index_link.jpg">
+                <img class="symfony-image" src="img/symfony/complite_post/index_link.jpg" alt="Local server run">
+            </a>
+        </p>
+
+        <!--    <p class="symfony__text">-->
+        <!--        Проверяем работу, переходим на страницу постов и видим ошибку. В чем же тут ошибка?-->
+        <!--        Ошибка заключается в параметре <code class="inline-sample">{id}</code>. Посмотрите на-->
+        <!--        <code class="inline-sample">@Route</code>,-->
+        <!--        в обоих методах маршрут начинается с <code class="inline-sample">/post</code>. И получается что-->
+        <!--        <code class="inline-sample">/post/{id}</code>-->
+        <!--        отрабатывает, пытается найти id, но мы его не передаем.-->
+        <!--    </p>-->
+
+
+    </section>
+
+    <div class="page-nav">
+        <a tabindex="2" href="refactor_post.html" class="page-nav__prev" title="Previous page"></a>
+        <a tabindex="1" href="user.html" class="page-nav__next" title="Nex page"></a>
+    </div>
+
+</main>
+<!--<footer>-->
+<!--    Footer-->
+<!--</footer>-->
+<script src="js/jquery.js"></script>
+<script src="js/jquery.fancybox.pack.js"></script>
+<script src="js/highlight.pack.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

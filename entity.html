@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Сущности и миграции | Symfony 4</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/fonts/default.css">
+    <link rel="stylesheet" href="css/symfony/layout.css">
+    <link rel="stylesheet" href="css/symfony/styles.css">
+    <link rel="stylesheet" href="css/jquery.fancybox.css">
+
+</head>
+<body>
+<header class="main-header">
+    <b class="logo">Symfony 4</b>
+    <nav class="main-nav">
+        <ul class="main-nav__list">
+            <li> <a class="main-nav__link" href="index.html">Home</a> </li>
+            <li> <a class="main-nav__link" href="feedback.html">Feedback</a> </li>
+            <li> <a class="main-nav__link" href="#">Author</a> </li>
+            <!--            <li> <a class="main-nav__link" href="#">Help</a> </li>-->
+        </ul>
+    </nav>
+</header>
+<main class="main-container">
+
+    <nav class="breadcrumbs">
+        <ul class="breadcrumbs__list">
+            <!--        <li class="breadcrumbs__item">-->
+            <!--            <a class="breadcrumbs__link" href="/">Home</a>-->
+            <!--        </li>-->
+            <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="index.html">Symfony</a>
+            </li>
+            <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="#">Entity</a>
+            </li>
+        </ul>
+    </nav>
+
+    <h1 class="visuallyhidden">Symfony Entity</h1>
+
+    <section class="symfony entity">
+        <h2>Сущности и миграции</h2>
+        <p class="symfony__text">
+            В Symfony сущности «проецируют» на себя конкретную таблицу. Таблица User - сущность User.
+            Для простоты восприятия пока можно считать, что сущность это модель.
+            Однако, необходимо понимать, что Symfony не наследует MVC архитектуру, это HTTP фреймворк.
+        </p>
+
+        <p class="symfony__text">
+            Продолжаем работать над постами, но теперь будем выводить их из БД, а для этого нам понадобится сущность Post.
+            Создадим сущность с помощью генератора, который будет пошагово опрашивать нас, что она из себя представляет.
+        </p>
+
+        <p class="symfony__text">
+            Пишем <code class="inline-sample">php bin/console make:entity</code>,
+            вводим имя сущности – Post, далее создаем поля таблицы:
+        </p>
+
+        <div class="enumeration">
+            <ul class="enumeration__list">
+                <li>- title (string, 255, not null);</li>
+                <li>- body (text, not null);</li>
+                <li>- likes (integer, null).</li>
+            </ul>
+        </div>
+
+        <a class="fancybox" href="img/symfony/entity/make_entity.jpg">
+            <img class="symfony-image" src="img/symfony/entity/make_entity.jpg" alt="">
+        </a>
+
+        <p class="symfony__text">
+            После генерации создалась сущность Post (<code class="inline-sample">src->Entity</code>),
+            в которой можно увидеть свойства соответствующие полям таблицы, а так же геттеры/сеттеры для них.
+            Блоки аннотаций над свойствами прерогатива Docrtine.
+            Они красноречивы и просты в понимании, например, блок
+            <code class="inline-sample">@ORM\Column(type="string", length=255)</code>
+            имеет строковый тип с максимальной длиной 255 символов. На основе данных блоков
+            доктрина будет создавать таблицу, мы увидим весь процесс в теме про миграции.
+            <a class="fancybox" href="img/symfony/entity/post_entity.jpg">
+                <img class="symfony-image" src="img/symfony/entity/post_entity.jpg" alt="">
+            </a>
+        </p>
+
+        <p class="symfony__text">
+            Одновременно с сущностью был создан репозиторий
+            <code class="inline-sample">PostRepository</code> - класс, с помощью которого
+            будут выполняться запросы к базе данных. Он наследует <code class="inline-sample">EntityRepository</code>
+            и имеет несколько стандартных методов для выборки, например <code class="inline-sample">find, findAll, findBy</code>.
+            Закоментированные в нем методы мы будем использовать
+            для поиска по связанным таблицам.
+            <a class="fancybox" href="img/symfony/entity/post_repository.jpg">
+                <img class="symfony-image" src="img/symfony/entity/post_repository.jpg" alt="">
+            </a>
+        </p>
+
+    </section>
+
+    <hr>
+
+    <section class="symfony migrations">
+        <h2>Миграции</h2>
+
+        <p class="symfony__text">
+            Ранее мы подключали <code class="inline-sample">doctrine/doctrine-migrations-bundle</code>
+            в составе рецепта <code class="inline-sample">doctrine</code>.
+            Пришло время им воспользоваться и создать первую миграцию. Создаются миграции командой
+            <code class="inline-sample">php bin/console make:migration</code> или же
+            <code class="inline-sample">php bin/console doctrine:migrations:diff</code>
+            после создания сущности. Работает вся эта магия за счет маппинга в блоках аннотаций.
+
+            <!--        Например, во фреймворке Yii2 наоборот, сначала будет описана миграция,-->
+            <!--        потом применена, а на основе ее создается модель. (Есть вариант и на основе БД, ссылка).-->
+        </p>
+
+        <p class="symfony__text">
+            Если же вы изменили сущность, в помощь придет команда
+            <code class="inline-sample">php bin/console doctrine:migrations:diff</code>, которая
+            выявит расхождение между свойствами вашего класса и базой данных, а потом создаст миграцию.
+        </p>
+
+        <p class="symfony__text">
+            Итак, пишем <code class="inline-sample execution">php bin/console make:migration</code>. <br>
+            Убедиться, что миграция создана можно с помощью
+            <code class="inline-sample">php bin/console doctrine:migrations:status</code>,
+            ну или просто проверить директорию <code class="inline-sample">src => migrations</code>.
+            <a class="fancybox" href="img/symfony/entity/migrations_status.jpg">
+                <img class="symfony-image" src="img/symfony/entity/migrations_status.jpg" alt="">
+            </a>
+            Теперь применим ее к нашей БД командой
+            <code class="inline-sample execution">php bin/console doctrine:migrations:migrate</code>, соглашаемся.
+            База обновлена, таблица post создана, а вместе с ней таблица migration_versions
+            которая хранит историю всех примененных миграций.
+        </p>
+    </section>
+
+    <div class="page-nav">
+        <a tabindex="2" href="twig.html" class="page-nav__prev" title="Previous page"></a>
+        <a tabindex="1" href="refactor_post.html" class="page-nav__next" title="Nex page"></a>
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script>
+
+        var disqus_config = function () {
+            this.page.url = 'https://daniil-solovev.github.io/';
+            this.page.identifier = 'entity';
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://symfony-1.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</main>
+<!--<footer>-->
+<!--    Footer-->
+<!--</footer>-->
+<script src="js/jquery.js"></script>
+<script src="js/jquery.fancybox.pack.js"></script>
+<script src="js/highlight.pack.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

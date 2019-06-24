@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Шаблонизатор Twig | Symfony 4</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/fonts/default.css">
+    <link rel="stylesheet" href="css/symfony/layout.css">
+    <link rel="stylesheet" href="css/symfony/styles.css">
+    <link rel="stylesheet" href="css/jquery.fancybox.css">
+
+</head>
+<body>
+<header class="main-header">
+    <b class="logo">Symfony 4</b>
+    <nav class="main-nav">
+        <ul class="main-nav__list">
+            <li> <a class="main-nav__link" href="index.html">Home</a> </li>
+            <li> <a class="main-nav__link" href="feedback.html">Feedback</a> </li>
+            <li> <a class="main-nav__link" href="#">Author</a> </li>
+        </ul>
+    </nav>
+</header>
+<main class="main-container">
+
+    <nav class="breadcrumbs">
+        <ul class="breadcrumbs__list">
+            <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="index.html">Symfony</a>
+            </li>
+            <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="#">Twig</a>
+            </li>
+        </ul>
+    </nav>
+
+    <h1 class="visuallyhidden">Twig + Symfony</h1>
+
+    <section class="symfony twig">
+        <h2>Шаблонизатор Twig</h2>
+        <p class="symfony__text">
+            В мире Symfony принято использовать шаблонизатор
+            <a class="symfony-link".jpg href="https://twig.symfony.com/">Twig</a>.
+            Если ранее вы с такими штуками не сталкивались, то, возможно хорошо, что twig будет у вас первым.
+            Вещь удобная и лаконичная, конечно же со своими особенностями и синтаксисом,
+            правда привыкнуть к ним не составит никаких проблем.
+
+        </p>
+        <p class="symfony__text">
+            Давайте подключим его с помощью <code class="inline-sample execution">composer require template</code>.
+            После подключения рецепта в структуре фреймворка появилась папка templates, а в ней шаблон
+            <code class="inline-sample">base.html.twig</code>, который будет общим для всех страниц нашего проекта.
+            <a class="fancybox" href="img/symfony/twig/base_template.jpg">
+                <img class="symfony-image" src="img/symfony/twig/base_template.jpg" alt="">
+            </a>
+            Открываем <code class="inline-sample">base.html.twig</code>
+            и видим несколько конструкций вида <code class="inline-sample">{% block %}</code>.
+            Таким образом размечаются блоки, которые в дальнейшем вы сможете переопределять
+            благодаря <b>наследованию</b>. <b>Именно переопределять!</b>
+            Создавать новые блоки в дочернем шаблоне запрещено.
+        </p>
+        <p class="symfony__text">
+            Давайте перенесем общие части сайта - шапку и подвал из <a target="_blank" class="symfony-link" href="https://cloud.mail.ru/public/5cvY/2ztxBoSdj">архива</a>
+            в базовый шаблон, а также подключим стили и скрипты. Ну и начнем с последнего. Располагаться "расходники" будут в папке public нашего проекта.
+            Просто скопируйте css, js, img из архива в данный каталог.
+        </p>
+
+        <p class="symfony__text">
+            Теперь верстка. Всего будет 5 страниц, шапка и футер одинаковы для всех.
+        </p>
+        <div class="enumeration">
+            <ul class="enumeration__list">
+                <li>- список новостей;</li>
+                <li>- создание новости;</li>
+                <li>- список пользователей;</li>
+                <li>- регистрация;</li>
+                <li>- логин.</li>
+            </ul>
+        </div>
+
+<!--        <p class="postscriptum">-->
+<!--            Сырой вариант верстки находится в папке <b>lesson</b>.-->
+<!--            Готовый вариант в папке <b>ready</b>.-->
+<!--        </p>-->
+
+        <p class="symfony__text">
+            Сейчас нам нужно оставить только общие части шаблона, удалив все лишнее.
+            Попробуйте сначала сделать все самостоятельно. На текущий момент структура должна иметь следующий вид:
+            <a class="fancybox" href="img/symfony/twig/layout_without_twig.jpg">
+                <img class="symfony-image" src="img/symfony/twig/layout_without_twig.jpg" alt="">
+            </a>
+        </p>
+
+        <p class="symfony__text">
+            Теперь разместим блоки <b>Twig</b>. Нас интересуют <code class="inline-sample">title</code> и
+            <code class="inline-sample">body</code>.
+            Обратите внимание на title, в нем указано <b>"Welcome!"</b>.
+            Данный текст является "заглушкой" и будет отображен, если в дочерних блоках мы не переопределим заголовок.
+            <a class="fancybox" href="img/symfony/twig/base_without_layout.jpg">
+                <img class="symfony-image" src="img/symfony/twig/base_without_layout.jpg" alt="">
+            </a>
+        </p>
+
+        <p class="postscriptum">
+            Обязательно закрывайте блоки с помощью <code class="inline-sample">{% endblock %}</code>.
+        </p>
+
+        <p class="symfony__text">
+            Стили и скрипты подключим с помощью <code class="inline-sample">asset</code>,
+            разумеется предварительно их установив при помощи
+            <code class="inline-sample execution">composer require asset</code>.
+            Далее просто начните вводить имя файла и начнет работать автокомплит плагинов, которые мы ранее установили.
+            <a class="fancybox" href="img/symfony/twig/assets.jpg">
+                <img class="symfony-image" src="img/symfony/twig/assets.jpg" alt="">
+            </a>
+        </p>
+
+        <p class="symfony__text">
+            Отлично, сделано! Но сейчас нам нечего выводить, есть только шапка и футер.
+            Давайте создадим шаблон для конкретного поста. Для этого создаем папку post в директории templates,
+            а в post создаем <code class="inline-sample">index.html.twig</code>,
+            обязательно унаследовав его от базового шаблона с помощью
+            <code class="inline-sample">{% extends 'base.html.twig' %}</code>.
+            <a class="fancybox" href="img/symfony/twig/one_post.jpg">
+                <img class="symfony-image" src="img/symfony/twig/one_post.jpg" alt="">
+            </a>
+        </p>
+
+        <p class="postscriptum">
+            Сырой вариант верстки представляет из себя вырванный из контекста блок "col-md-4" базового шаблона.
+        </p>
+
+        <p class="symfony__text">
+            Сейчас мы имеем только один статичный пост, который при любых обстоятельствах выведет нам одно и то же.
+            Давайте это исправим. Нужно создать конструкцию, в которой посты будут выводиться динамически, каждый
+            со своим текстом и заголовком. Поможет нам в этом цикл <code class="inline-sample">for</code> и конструкция
+            <code class="inline-sample">{{ object.value }}</code>;
+            <a class="fancybox" href="img/symfony/twig/post_index.jpg">
+                <img class="symfony-image" src="img/symfony/twig/post_index.jpg" alt="">
+            </a>
+        </p>
+
+        <p class="symfony__text">
+            Давайте повторим. Мы создаем базовый шаблон <code class="inline-sample">base.html.twig</code>, в нем шапка и футер.
+            В <code class="inline-sample">index.html.twig</code> мы подключаем его с помощью директивы extends,
+            переопределяем блок title для конкретной страницы и блок body.
+            Делаем это с помощью одноименных с базовым шаблоном конструкций
+            <code class="inline-sample">{% block title %}</code>
+            и <code class="inline-sample">{% block body %}</code>. Напомню, что создавая блоки отличные
+            от родителя - схватите ошибку.
+        </p>
+
+        <div class="enumeration">
+            <p class="enumeration__title">Синтаксические конструкции:</p>
+            <ul class="enumeration__list">
+                <li>
+                    <p class="twig-container">
+                        <strong>{{ variable }}</strong> – в двойных фигурных скобках выводится значение переменной.
+                        Обращение к объектам производится через точку, <code class="inline-sample">{{ variable.name }}</code> без знака '$'. <br>
+                        К элементам массива – стандартно через <code class="inline-sample">{{ variable[name] }}</code>.
+                        Если значение с дефисом, то нужно прибегать к конструкции
+                        <code class="inline-sample">{{ attribute(variable, ‘first-name’) }}</code>.
+                    </p>
+                </li>
+                <li>
+                    <p class="twig-container">
+                        <strong>{% condition %}</strong> – вывод условий, циклов, подключение блоков.
+                        Из циклов в twig есть только <b>for</b>, и используется он по аналогии js,
+                        т.е. пишете <code class="inline-sample">for post in posts</code>.
+                        Если требуется ключ – <code class="inline-sample">for key, post in posts</code>.
+                    </p>
+                </li>
+                <li>
+                    <p class="twig-container">
+                        <strong>{# comment #}</strong> – блок комментариев.
+                    </p>
+                </li>
+            </ul>
+        </div>
+
+
+        <p class="symfony__text">
+            Последним шагом осталось протестировать все, что мы сделали. Добавим в метод
+            <code class="inline-sample">index</code> нашего единственного контроллера несколько постов:
+        </p>
+
+        <pre class="code-sample">
+        <code class="php">
+    $posts = [
+        'post1' => [
+            'title' => '1 Заголовок',
+            'body' => 'Тело первого поста'
+        ],
+        'post2' => [
+            'title' => '2 Заголовок',
+            'body' => 'Тело второго поста'
+        ],
+        'post3' => [
+            'title' => '3 Заголовок',
+            'body' => 'Тело третьего поста'
+        ],
+    ];
+        </code>
+    </pre>
+
+        <p class="symfony__text">
+            Теперь передаем в метод <code class="inline-sample">render</code> нашего контроллера шаблон
+            <code class="inline-sample">index.html.twig</code> и
+            массив с постами. В итоге должно получиться так:
+            <a class="fancybox" href="img/symfony/twig/post_render.jpg">
+                <img class="symfony-image" src="img/symfony/twig/post_render.jpg" alt="">
+            </a>
+        </p>
+        <p class="symfony__text">Запускаем сервер, проверяем.</p>
+        <hr>
+
+        <!--    <p class="symfony__text">-->
+        <!--        Создаваемые посты могут быть достаточно объемными и лучшей реализацией будет-->
+        <!--        сокращение длины постов в общем списке по 100 символов.-->
+        <!--        Для этого нам потребуются «фильтры» в Twig, своего рода вспомогательные функции,-->
+        <!--        а конкретно это будет <code class="inline-sample">slice</code>.-->
+        <!--    </p>-->
+        <!--    <p class="symfony__text">-->
+        <!--        Применим фильтр к шаблону <code class="inline-sample">index.html.twig</code>,-->
+        <!--        изменив длину <code class="inline-sample">post.title</code> на 25 символов,-->
+        <!--        <code class="inline-sample">post.body</code> на 100.-->
+        <!---->
+        <!--    </p>-->
+        <!---->
+        <!--    <pre class="code-sample"><code class="php">-->
+        <!--            {{ post.title | slice(0, 25) ~ '...' }}-->
+        <!--            {{ post.body | slice(0, 100) ~ '...' }}-->
+        <!--        </code></pre>-->
+        <!---->
+        <!--    <p class="symfony__text">-->
+        <!--        Для проверки просто измените массив $posts в контроллере-->
+        <!--        PostController увеличив длину <code class="inline-sample">body</code> до 100+ символов. <br>-->
+        <!--        В коде выглядит так:-->
+        <!--        <a class="fancybox" href="<?= Yii::getAlias('@web') ?>/img/symfony/twig/slice.jpg">-->
+        <!--            <img class="symfony-image" src="<?= Yii::getAlias('@web') ?>/img/symfony/twig/slice.jpg" alt="">-->
+        <!--        </a>-->
+        <!--        На странице так:-->
+        <!--        <a class="fancybox" href="<?= Yii::getAlias('@web') ?>/img/symfony/twig/truncate.jpg">-->
+        <!--            <img class="symfony-image" src="<?= Yii::getAlias('@web') ?>/img/symfony/twig/truncate.jpg" alt="">-->
+        <!--        </a>-->
+        <!--    </p>-->
+
+
+
+        <h2>Подключение фильтра "truncate"</h2>
+        <p class="symfony__text">
+            Создаваемые посты могут быть достаточно объемными и лучшей реализацией будет
+            сокращение длины постов в общем списке по 100 символов.
+            Для этого нам потребуются «фильтры» в Twig, своего рода вспомогательные функции.
+        </p>
+
+        <div class="enumeration">
+            <p class="enumeration__title">Установка:</p>
+            <ul class="enumeration__list">
+                <li>- подключаем библиотеку <code class="inline-sample execution">composer require twig/extensions</code>.
+                    Здесь, как видно, Symfony Flex уже не используется.
+                </li>
+                <li>
+                    - регистрируем расширение "text extension" из вышеуказаной библиотеки в сервисах.
+                    Для этого переходим в папку config, открываем services.yaml и добавляем туда следующий код:
+
+                    <pre class="code-sample">
+                    <code class="php">
+    services:
+        twig.extension.text:
+            class: Twig_Extensions_Extension_Text
+            tags:
+                - { name: twig.extension }
+                    </code>
+                </pre>
+
+                    Выглядит это так:
+                    <a class="fancybox" href="img/symfony/twig/text_extension.jpg">
+                        <img class="symfony-image" src="img/symfony/twig/text_extension.jpg" alt="">
+                    </a>
+                </li>
+                <li>
+                    - применим фильтр к шаблону <code class="inline-sample">index.html.twig</code>, изменив <code class="inline-sample">post.title</code>,
+                    <code class="inline-sample">post.body</code> на <code class="inline-sample">post.title | truncate(50, true)</code>,
+                    <code class="inline-sample">post.body | truncate(100, true)</code> соответственно.
+                    Для проверки просто изменим массив $posts в контроллере
+                    PostController увеличив длину <code class="inline-sample">body</code> до 100+ символов.
+                    Проверяем:
+                    <a class="fancybox" href="img/symfony/twig/truncate.jpg">
+                        <img class="symfony-image" src="img/symfony/twig/truncate.jpg" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <p class="postscriptum">
+            Лично у меня каждый раз возникала ошибка после подключения данного расширения.
+            Решалась проблема с помощью очистки кеша <code class="inline-sample">php bin/console cache:clear</code>.
+        </p>
+
+    </section>
+
+    <div class="page-nav">
+        <a tabindex="2" href="controller.html" class="page-nav__prev" title="Previous page"></a>
+        <a tabindex="1" href="entity.html" class="page-nav__next" title="Nex page"></a>
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script>
+
+        var disqus_config = function () {
+            this.page.url = 'https://daniil-solovev.github.io/';
+            this.page.identifier = 'twig';
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://symfony-1.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</main>
+<!--<footer>-->
+<!--    Footer-->
+<!--</footer>-->
+<script src="js/jquery.js"></script>
+<script src="js/jquery.fancybox.pack.js"></script>
+<script src="js/highlight.pack.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

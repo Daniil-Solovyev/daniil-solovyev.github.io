@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Вступление</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/fonts/default.css">
+    <link rel="stylesheet" href="css/symfony/layout.css">
+    <link rel="stylesheet" href="css/symfony/styles.css">
+    <link rel="stylesheet" href="css/jquery.fancybox.css">
+
+</head>
+<body>
+<header class="main-header">
+    <b class="logo">Symfony 4</b>
+    <nav class="main-nav">
+        <ul class="main-nav__list">
+            <li> <a class="main-nav__link" href="index.html">Home</a> </li>
+            <li> <a class="main-nav__link" href="feedback.html">Feedback</a> </li>
+            <li> <a class="main-nav__link" href="#">Author</a> </li>
+            <!--            <li> <a class="main-nav__link" href="#">Help</a> </li>-->
+        </ul>
+    </nav>
+</header>
+<main class="main-container">
+
+    <nav class="breadcrumbs">
+        <ul class="breadcrumbs__list">
+            <!--        <li class="breadcrumbs__item">-->
+            <!--            <a class="breadcrumbs__link" href="/">Home</a>-->
+            <!--        </li>-->
+            <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="index.html">Symfony</a>
+            </li>
+            <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="#">Introduction</a>
+            </li>
+        </ul>
+    </nav>
+
+    <h1 class="visuallyhidden">Introduction</h1>
+
+    <section class="symfony intro-greeting">
+        <h2>Вступление</h2>
+
+        <h3>Всем привет!</h3>
+        <p class="symfony__text">
+            Осваивая какой-либо новый материал, зачастую бывает ну очень тяжело его понять. И дело не всегда
+            в способности как-то мыслить или банальной лени, просто иногда этот материал представляет из себя уже
+            сформировавшуюся культуру с колоссальным количеством примеров и документацией на сотни страниц.
+            Звучит неплохо, вроде есть всё что надо, но на практике не покидает чувство "с чего начать?".
+        </p>
+        <p class="symfony__text">
+            Курсы вроде этого, использующие принцип быстрого старта, уже давно себя зарекомендовали.
+            В таких курсах авторы ведут вас за руку, последовательно ознакамливая с материалом,
+            обучая основам и некоторым тонкостям работы с новым инструментом. В голове читателя выстраивается
+            правильная структура, он начинает понимать возможности инструмента и, постепенно дополняя свои знания
+            примерами из документации, эффект не заставит себя долго ждать. Именно такой подход к изучению предложен
+            в данном цикле статей. Желаю каждому удачи и терпения!
+        </p>
+
+        <p class="postscriptum">
+            К счастью, каждый человек уникален и зачастую мыслит не так как другие.
+            В связи с этим кому-то может показаться, что в тексте нехватает лаконичности, а в коде - оптимизации.
+            Просьба отнеснись к этому с пониманием. Однако, конструктивная критика в комментариях только приветствуется.
+            <!--    Все исходники можно посмотреть на <a class="symfony-link" href="#">github</a>.-->
+        </p>
+
+        <div class="enumeration">
+            <p class="enumeration__title">Предполагаю, что в вашем арсенале есть:</p>
+            <ul class="enumeration__list">
+                <li>- HTML, CSS, JS;</li>
+                <li>- PHP;</li>
+                <li>- Опыт работы с любой популярной БД;</li>
+                <li>- Понимание MVC;</li>
+                <li>- Знакомы с любым из популярных фреймворков (желательно);</li>
+                <li>- Уже писали что-нибудь на вышеперечисленном.</li>
+            </ul>
+        </div>
+
+        <div class="enumeration">
+            <p class="enumeration__title">А так же установлены:</p>
+            <ul class="enumeration__list">
+                <li>- PHP;</li>
+                <li>- MySQL;</li>
+                <li>- Composer;</li>
+                <li>- phpStorm (желательно).</li>
+            </ul>
+        </div>
+
+    </section>
+
+    <hr>
+
+    <section class="symfony intro-training">
+        <h3>Что будет включать в себя учебный проект?</h3>
+        <p class="symfony__text">
+            Учебным проектом будет <b>«Твиттер на минималках»</b>. <br>
+            В его основе две сущности – пользователи и новости (aka посты).
+        </p>
+
+        <div class="enumeration">
+            <p class="enumeration__title"><b>Пользователи:</b></p>
+            <ul class="enumeration__list">
+                <li>- имеют возможность регистрации/авторизации;</li>
+                <li>- могу подписываться на других пользователей;</li>
+<!--                <li>- умеют ставить лайки и дизлайки;</li>-->
+                <li>- создают посты;</li>
+                <li>- выводятся общим списком с пагинацией;</li>
+                <li>- заполучив нового подписчика узнают об этом постредством email оповещения.</li>
+            </ul>
+        </div>
+
+        <div class="enumeration">
+            <p class="enumeration__title"><b>Посты:</b></p>
+            <ul class="enumeration__list">
+                <li>- по умолчанию лента новостей пуста, пока нет подписок;</li>
+<!--                <li>- сортируются исходя из количества положительных/отрицательных оценок;</li>-->
+                <li>- в общем списке имеют пагинацию.</li>
+            </ul>
+        </div>
+
+<!--        <p class="symfony__text intro-demo">Демку можно посмотреть <a class="symfony-link" href="#">тут</a>.</p>-->
+    </section>
+
+    <div class="page-nav">
+        <a tabindex="1" href="before-install.html" class="page-nav__next" title="Nex page"></a>
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script>
+
+        var disqus_config = function () {
+            this.page.url = 'https://daniil-solovev.github.io/';
+            this.page.identifier = 'intro';
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://symfony-1.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</main>
+<!--<footer>-->
+<!--    Footer-->
+<!--</footer>-->
+<script src="js/jquery.js"></script>
+<script src="js/jquery.fancybox.pack.js"></script>
+<script src="js/highlight.pack.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
