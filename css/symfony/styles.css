@@ -429,6 +429,11 @@ dl.descriptions-list {
     text-align: center;
 }
 
+/*author*/
+.author {
+    padding: 5% 2%;
+}
+
 /*buttons*/
 .btn {
     background: none;

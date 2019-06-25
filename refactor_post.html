@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Symfony 4 faker">
+    <meta name="keywords" content="faker">
 
     <title>Дорабатываем новости, часть 1 | Symfony 4</title>
-    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
-    <link rel="stylesheet" href="../css/fonts/default.css">
-    <link rel="stylesheet" href="../css/symfony/layout.css">
-    <link rel="stylesheet" href="../css/symfony/styles.css">
-    <link rel="stylesheet" href="../css/jquery.fancybox.css">
+    <link rel="stylesheet" href="css/fonts/default.css">
+    <link rel="stylesheet" href="css/symfony/layout.css">
+    <link rel="stylesheet" href="css/symfony/styles.css">
+    <link rel="stylesheet" href="css/jquery.fancybox.css">
 
 </head>
 <body>
@@ -23,9 +25,9 @@
     <b class="logo">Symfony 4</b>
     <nav class="main-nav">
         <ul class="main-nav__list">
-            <li> <a class="main-nav__link" href="content-table.html">Home</a> </li>
+            <li> <a class="main-nav__link" href="index.html">Home</a> </li>
             <li> <a class="main-nav__link" href="feedback.html">Feedback</a> </li>
-            <li> <a class="main-nav__link" href="#">Author</a> </li>
+            <li> <a class="main-nav__link" href="author.html">Author</a> </li>
         </ul>
     </nav>
 </header>
@@ -34,7 +36,7 @@
     <nav class="breadcrumbs">
         <ul class="breadcrumbs__list">
             <li class="breadcrumbs__item">
-                <a class="breadcrumbs__link" href="content-table.html">Symfony</a>
+                <a class="breadcrumbs__link" href="index.html">Symfony</a>
             </li>
             <li class="breadcrumbs__item">
                 <a class="breadcrumbs__link" href="#">Completion of posts</a>
@@ -83,8 +85,8 @@
 
         <p class="symfony__text">
             Вот что получилось:
-            <a class="fancybox" href="../img/symfony/complite_post/faker_example.jpg">
-                <img class="symfony-image" src="../img/symfony/complite_post/faker_example.jpg" alt="Local server run">
+            <a class="fancybox" href="img/symfony/complite_post/faker_example.jpg">
+                <img class="symfony-image" src="img/symfony/complite_post/faker_example.jpg" alt="Local server run">
             </a>
         </p>
 
@@ -109,8 +111,8 @@
         <p class="symfony__text">
             Осталось только обновить страницу, тем самым вызвав код на исполнение. Запустим сервер,
             перейдем по маршруту <code class="inline-sample">/post</code> и проверим БД:
-            <a class="fancybox" href="../img/symfony/complite_post/fill_database.jpg">
-                <img class="symfony-image" src="../img/symfony/complite_post/fill_database.jpg" alt="Local server run">
+            <a class="fancybox" href="img/symfony/complite_post/fill_database.jpg">
+                <img class="symfony-image" src="img/symfony/complite_post/fill_database.jpg" alt="Local server run">
             </a>
         </p>
     </section>
@@ -141,8 +143,8 @@
             <code class="inline-sample execution">$repository = $this->getDoctrine()->getRepository(Post::class)</code>.
             Собственно, применим <code class="inline-sample">findAll()</code> к репозиторию и выведем на страницу посты.
             Добавляем в код <code class="inline-sample execution">$posts = $repository->findAll()</code>.
-            <a class="fancybox" href="../img/symfony/complite_post/getdoctrine.jpg">
-                <img class="symfony-image" src="../img/symfony/complite_post/getdoctrine.jpg" alt="Local server run">
+            <a class="fancybox" href="img/symfony/complite_post/getdoctrine.jpg">
+                <img class="symfony-image" src="img/symfony/complite_post/getdoctrine.jpg" alt="Local server run">
             </a>
             Обновляем страницу и наблюдаем свежесгенерированные новости.
         </p>
@@ -197,8 +199,8 @@
             <code class="inline-sample">show.html.twig</code>.
             Код можно взять <a target="_blank" class="symfony-link" href="https://cloud.mail.ru/public/2reY/BTWFwR5er">здесь</a>.
 
-            <a class="fancybox" href="../img/symfony/complite_post/show_post.jpg">
-                <img class="symfony-image" src="../img/symfony/complite_post/show_post.jpg" alt="Local server run">
+            <a class="fancybox" href="img/symfony/complite_post/show_post.jpg">
+                <img class="symfony-image" src="img/symfony/complite_post/show_post.jpg" alt="Local server run">
             </a>
 
             Теперь обновим ссылки с текстом <code class="inline-sample">Read more</code>
@@ -207,8 +209,8 @@
             <code class="inline-sample">{{ path('post', {'id': post.id}) }}</code>.
             Запускаем сервер и проверяем.
 
-            <a class="fancybox" href="../img/symfony/complite_post/index_link.jpg">
-                <img class="symfony-image" src="../img/symfony/complite_post/index_link.jpg" alt="Local server run">
+            <a class="fancybox" href="img/symfony/complite_post/index_link.jpg">
+                <img class="symfony-image" src="img/symfony/complite_post/index_link.jpg" alt="Local server run">
             </a>
         </p>
 
@@ -251,9 +253,9 @@
 <!--<footer>-->
 <!--    Footer-->
 <!--</footer>-->
-<script src="../js/jquery.js"></script>
-<script src="../js/jquery.fancybox.pack.js"></script>
-<script src="../js/highlight.pack.js"></script>
-<script src="../js/script.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/jquery.fancybox.pack.js"></script>
+<script src="js/highlight.pack.js"></script>
+<script src="js/script.js"></script>
 </body>
 </html>
