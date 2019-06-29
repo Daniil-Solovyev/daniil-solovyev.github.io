@@ -85,9 +85,9 @@ hr {
     cursor: pointer;
     text-transform: uppercase;
     white-space: nowrap;
-    transition: 30s;
 }
 .logo:hover {
     color: red;
+    transition: 30s;
 }
 /*end header*/

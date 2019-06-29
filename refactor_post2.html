@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Дорабатываем новости, часть 2 | Symfony 4</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/fonts/default.css">
+    <link rel="stylesheet" href="css/symfony/layout.css">
+    <link rel="stylesheet" href="css/symfony/styles.css">
+    <link rel="stylesheet" href="css/jquery.fancybox.css">
+
+</head>
+<body>
+<header class="main-header">
+    <b class="logo">Symfony 4</b>
+    <nav class="main-nav">
+        <ul class="main-nav__list">
+            <li> <a class="main-nav__link" href="index.html">Home</a> </li>
+            <li> <a class="main-nav__link" href="feedback.html">Feedback</a> </li>
+            <li> <a class="main-nav__link" href="#">Author</a> </li>
+        </ul>
+    </nav>
+</header>
+<main class="main-container">
+
+    <nav class="breadcrumbs">
+        <ul class="breadcrumbs__list">
+            <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="index.html">Symfony</a>
+            </li>
+            <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="#">Completion of posts 2</a>
+            </li>
+        </ul>
+    </nav>
+
+    <h1 class="visuallyhidden">Completion of posts, part 2</h1>
+
+    <section class="symfony refactor">
+        <h2>Дорабатываем вывод новостей, часть 2</h2>
+
+        <p class="symfony__text">
+            Работа с формами - одна из самых частых задач встречающихся на пути web-разработчика. Необходимо хорошо знать
+            возможности форм, уметь выстраивать их в нужной последовательности и понимать принципы работы. Тема эта
+            сама по себе большая. Данный курс все же руководствуется шаблоном "быстрый старт", поэтому в данной главе мы разберем
+            именно тот вариант работы с формой, который будет удобен в учебном проекте. Но я настоятельно рекомендую вам
+            познакомиться с этим материалом как можно лучше.
+            <a target="_blank" class="symfony-link" href="https://symfony.ru/doc/current/forms.html">Тема в документации</a>
+        </p>
+
+        <p class="symfony__text">
+            Чтобы начать работать с формами нам нужно подключить соответствующий рецепт, для этого напишем
+            <code class="inline-sample execution">composer require form</code>.
+        </p>
+
+        <p class="symfony__text">
+            Создавать форму будем на основе нашей единственной сущности - Post.
+            Для ее генерации все так же будем использовать <b>maker'ом</b>.
+            В консоли пишем <code class="inline-sample execution">php bin/console make:form</code> и далее имя формы.
+            <a class="fancybox" href="img/symfony/complite_post2/create_form.jpg">
+                <img class="symfony-image" src="img/symfony/complite_post2/create_form.jpg" alt="Local server run">
+            </a>
+        </p>
+
+        <p class="symfony__text">
+            В директории <code class="inline-sample">src=>Form</code> теперь находится форма под названием PostType.
+            Представляет она из себя метод <code class="inline-sample">configureOptions</code>
+            - указывающий на пренадлежность формы к сущности, и метод <code class="inline-sample">buildForm</code>
+            - билдер, в котором будем описывать поля формы, их тип и т.д.
+            <!--        <a class="fancybox" href="<?= Yii::getAlias('@web') ?>/img/symfony/complite_post2/src_form.jpg">-->
+            <!--            <img class="symfony-image" src="<?= Yii::getAlias('@web') ?>/img/symfony/complite_post2/src_form.jpg" alt="Local server run">-->
+            <!--        </a>-->
+        </p>
+
+        <p class="symfony__text">
+            Давайте немного изменим форму под наши нужды. Для начала закоментируем <code class="inline-sample">add('likes')</code>, т.к.
+            лайки будут ставить пользователи. Ну а поле <code class="inline-sample">body</code>
+            будет представлять из себя <b>textarea</b>, что мы и укажем.
+            <a class="fancybox" href="img/symfony/complite_post2/change_form.jpg">
+                <img class="symfony-image" src="img/symfony/complite_post2/change_form.jpg" alt="Local server run">
+            </a>
+        </p>
+
+        <p class="postscriptum">
+            Обратите внимание на Textarea, должен быть указан следующий namespace
+            <code class="inline-sample">use Symfony\Component\Form\Extension\Core\Type\TextareaType</code>.
+        </p>
+
+        <p class="symfony__text">
+            Теперь перейдем к контроллеру и создадим в нем метод <code class="inline-sample">createPost</code>,
+            и разберем что в нем есть.
+        </p>
+
+        <pre class="code-sample">
+        <code class="php">
+    use Symfony\Component\HttpFoundation\Request;
+    use App\Form\PostType;
+
+    /**
+     * @Route("/create_post", name="create_post")
+     */
+    public function createPost(Request $request)
+    {
+        $post = new Post();
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($post);
+            $em->flush();
+
+            return $this->redirect('/');
+        }
+
+        return $this->render('post/create.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+        </code>
+    </pre>
+
+        <p class="symfony__text">
+            Первое, на что стоит обратить внимание это аргумент самого метода - <code class="inline-sample">Request</code>.
+            Напомню, что Symfony представляет из себя HTTP фреймворк, данные он получает из класса Request и отдаёт в виде Response.
+            Ответ мы принимаем переменной <code class="inline-sample">Request $request</code>, а методом
+            <code class="inline-sample">$form->handleRequest($request)</code> ниже по коду
+            его обрабатываем, получая имя формы, метод и т.д.
+            Что касается <b>isSubmited</b> и <b>isValid</b> думаю, понятно и без пояснений.
+
+            <!--        Теперь перейдем к контроллеру. Создаем метод <code class="inline-sample">createPost</code>, агруметом которого-->
+            <!--        будет оъект Request с namespace <code class="inline-sample">Symfony\Component\HttpFoundation\Request</code>.-->
+        </p>
+
+        <div class="enumeration">
+            <p class="symfony__text">После того как форма прошла валидацию:</p>
+            <ul class="enumeration__list">
+                <li>
+                    - с помощью <code class="inline-sample">$manager = $this->getDoctrine()->getManager()</code>
+                    мы инициировали менеджер объекта для конкретной сущности, в нашем случае это Post.
+                    Он отвечает за сохранение объектов и выборку объектов из базы данных.
+                </li>
+                <li>
+                    - метод <strong>persist()</strong> в контексте <code class="inline-sample">$manager->persist($post)</code>
+                    выполняет подготовку запроса.
+                </li>
+                <li>
+                    - метод <strong>flush()</strong> в <code class="inline-sample">$manager->flush()</code> записывает в базу.
+                </li>
+            </ul>
+        </div>
+
+        <p class="postscriptum">
+            Я надеюсь никто из вас меня не возненавидит, в конце концов мы же учимся... Все дело в том, что подключив
+            <b>maker</b>, мы получили возможность генерации CRUD с помощью
+            <code class="inline-sample">php bin/console make:crud</code>.
+        </p>
+
+        <p class="symfony__text">
+            Перед тем как приступить к заключительной части, нам предстоит подключить translator и познакомиться с темами форм.
+            Назначение "переводчика" думаю понятно всем, но в нашем проекте он задействован не будет, резонный вопрос -
+            "зачем он тогда вообще тут нужен?". И тут мы подходим к темам форм. Если вы до этого работали с какими-либо
+            фреймворками, то наверняка знаете, что в стандартный виджет форм уже входят такие штуки как label, input, error, hint.
+            Вот и Symfony не исключение. Стандартной темой отображения формы является шаблон
+            <code class="inline-sample">form_div_layout.html.twig</code>, который располагается в корне фреймворка.
+            Если посмотреть на
+            <a target="_blank" class="symfony-link" href="https://github.com/symfony/twig-bridge/blob/master/Resources/views/Form/form_div_layout.html.twig">исходный код</a>,
+            можно увидеть в нем все вышеуказанные элементы, а так же конструкцию <code class="inline-sample">trans ({})</code>.
+            Собственно поэтому мы и подключаем <code class="inline-sample execution">composer require translation</code>,
+            иначе неминуемо словим ошибку.
+        </p>
+
+        <p class="postscriptum">
+            Разумеется можно переопределить стандартный шаблон. Как это сделать, да и вообще познакомиться с формами
+            поближе однозначно стоит. Вот ссылки для чтения (
+            <a target="_blank" class="symfony-link" href="https://symfony.ru/doc/current/form/form_themes.html">ссылка 1</a>,
+            <a target="_blank" class="symfony-link" href="https://symfony.ru/doc/current/form/form_customization.html">ссылка 2</a> ).
+        </p>
+
+        <p class="symfony__text">
+            Итак, давайте уже создадим представление. Сейчас предлагаю вывести его как есть, без стилей.
+        </p>
+
+        <pre class="code-sample">
+        <code class="php">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    < button type="submit">Сохранить< /button>
+    {{ form_end(form) }}
+        </code>
+    </pre>
+
+        <p class="symfony__text">
+            С помощью <code class="inline-sample execution">form_start</code> и
+            <code class="inline-sample execution">form_end</code> мы обозначаем границы формы, а в центр помещаем
+            <code class="inline-sample execution">form_widget</code>, который отобразит нам всю форму сразу.
+            Для того чтобы кастомизировать каждое поле отдельно можно воспользоваться
+            <code class="inline-sample execution">form_row</code>, например как здесь:
+        </p>
+
+        <pre class="code-sample">
+        <code class="php">
+    {{ form_start(form) }}
+    {{ form_row(form.title) }
+    {{ form_row(form.body, { 'attr': {
+        'rows' : '10',
+        'class' : 'form-control',
+        'placeholder' : 'Description',
+        'cols' : '10' }}) }}
+    < button type="submit">Сохранить< /button>
+    {{ form_end(form) }}
+        </code>
+    </pre>
+
+        <p class="symfony__text">
+            Ну и наконец проверим работоспособнось формы. Перейдем по маршруту
+            <code class="inline-sample execution">create_post</code>, что-нибудь напишем и проверим.
+        </p>
+
+        <p class="postscriptum">
+            Для тех, кто хочет чуть приукрасить форму, код можно взять
+            <a target="_blank" class="symfony-link" href="https://cloud.mail.ru/public/2m5M/wRgHhzk7Q">здесь</a>
+        </p>
+
+    </section>
+
+    <div class="page-nav">
+        <a tabindex="2" href="refactor_post.html" class="page-nav__prev" title="Previous page"></a>
+        <a tabindex="1" href="user.html" class="page-nav__next" title="Nex page"></a>
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script>
+
+        var disqus_config = function () {
+            this.page.url = 'https://daniil-solovev.github.io/';
+            this.page.identifier = 'refactor-post2';
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://symfony-1.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</main>
+<!--<footer>-->
+<!--    Footer-->
+<!--</footer>-->
+<script src="js/jquery.js"></script>
+<script src="js/jquery.fancybox.pack.js"></script>
+<script src="js/highlight.pack.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
