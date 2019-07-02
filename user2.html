@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Symfony 4 регистрация">
+    <meta name="keywords" content="register symfony, валидация symfony, symfony validation">
+
+    <title>Регистрация, часть 2 | Symfony 4</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/fonts/default.css">
+    <link rel="stylesheet" href="css/symfony/layout.css">
+    <link rel="stylesheet" href="css/symfony/styles.css">
+    <link rel="stylesheet" href="css/jquery.fancybox.css">
+
+</head>
+<body>
+<header class="main-header">
+    <b class="logo">Symfony 4</b>
+    <nav class="main-nav">
+        <ul class="main-nav__list">
+            <li> <a class="main-nav__link" href="index.html">Home</a> </li>
+            <li> <a class="main-nav__link" href="feedback.html">Feedback</a> </li>
+            <li> <a class="main-nav__link" href="#">Author</a> </li>
+        </ul>
+    </nav>
+</header>
+<main class="main-container">
+
+    <nav class="breadcrumbs">
+        <ul class="breadcrumbs__list">
+            <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="index.html">Symfony</a>
+            </li>
+            <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="#">Register, part 2</a>
+            </li>
+        </ul>
+    </nav>
+
+    <h1 class="visuallyhidden">Symfony, user registration</h1>
+
+    <section class="symfony validation">
+        <h2>Регистрация, часть 2. Валидация</h2>
+        <p class="symfony__text">
+            Каким бы удобным и интуитивно понятным ни был бы интерфейс, пользователь все равно введет
+            в поле email свои паспортные данные, а в пароль с подписью «не менее 7 символов» вставит слово «семь».
+            Как им можно верить? - никак, поэтому валидация наше все.
+            Подключается рецептом <code class="inline-sample execution">composer require validator</code>.
+        </p>
+
+        <p class="symfony__text">
+            Существует несколько вариантов валидации
+            (подробнее <a target="_blank" class="symfony-link" href="https://symfony.ru/doc/current/validation.html">здесь</a>),
+            каждый из которых применим под конкретный сценарий. Мы рассмотрим вариант с валидацией <b>свойств класса</b>,
+            как самый простой и удобный в нашем случае.
+        </p>
+
+        <pre class="code-sample">
+        <code class="php">
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(min=3)
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid.")
+     * @ORM\Column(type="string", length=255)
+     */
+    private $email;
+        </code>
+    </pre>
+
+        <p class="symfony__text">
+            В примере выше свойству <code class="inline-sample">$email</code> заданы следующие правила валидации:
+        </p>
+
+        <ul class="enumeration__list">
+            <li>
+                - <code class="inline-sample">NotBlank()</code> - свойство не может быть пустым;
+            </li>
+            <li>
+                - <code class="inline-sample">Length(min=3)</code> - минимальная длина 3 символа;
+            </li>
+            <li>
+                - <code class="inline-sample">Email</code> - поле должно представлять из себя email адрес.
+                В скобках задан аттрибут <code class="inline-sample">message</code>, значением которого будет
+                сообщение отображаемое пользователю, если ввод не будет похож на email.
+            </li>
+        </ul>
+
+        <p class="symfony__text">
+            Свойству $plainPassword (напомню, именно его будем выводить в форме) так же присвоим валидаторы:
+        </p>
+
+        <pre class="code-sample">
+        <code class="php">
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(min=6)
+     */
+    private $plainPassword;
+        </code>
+    </pre>
+
+        <p class="symfony__text">
+            Самому классу <b>User</b> добавим аннотацию <b>UniqueEntity</b>, которая поможет нам сохранять в базу
+            только пользователей с уникальным email.
+        </p>
+
+        <pre class="code-sample">
+        <code class="php">
+    /**
+     * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+     * @UniqueEntity(fields="email", message="Email already taken")
+     */
+        </code>
+    </pre>
+
+        <p class="symfony__text">
+            На текущий момент класс <b>User</b> должен выглядеть следующим образом:
+            <a class="fancybox" href="img/symfony/register2/full_user.jpg">
+                <img class="symfony-image" src="img/symfony/register2/full_user.jpg" alt="Local server run">
+            </a>
+        </p>
+
+    </section>
+
+<!-- TODO Поменять везде alt у img-->
+<!-- TODO При логине задействовать провайдер-->
+
+    <section class="symfony register">
+        <h2>Создание формы</h2>
+        <p class="symfony__text">
+            Ранее мы уже создавали форму добавления новости. В данном случае отличия будут только на уровне сущности.
+            Откроем консоль и инициируем работу генератора
+            <code class="inline-sample execution">php bin/console make:form</code>.
+            <a class="fancybox" href="img/symfony/register2/user_form.jpg">
+                <img class="symfony-image" src="img/symfony/register2/user_form.jpg" alt="Local server run">
+            </a>
+
+            На данном этапе нам потребуются только <b>$email</b> и <b>$plainPassword</b>, поэтому оставшиеся поля
+            закомментируем, а <b>password</b> заменим на <b>plainPassword</b>.
+            <a class="fancybox" href="img/symfony/register2/form_fields.jpg">
+                <img class="symfony-image" src="img/symfony/register2/form_fields.jpg" alt="Local server run">
+            </a>
+
+            Теперь нам надо убедиться, что в email будет записан именно почтовый адрес, а пароль будет "засекречен
+            звездочками". Для этого обновим форму, изменив билдер на следующий код:
+        </p>
+        <pre class="code-sample">
+                    <code class="php">
+    $builder
+        ->add('email', EmailType::class)
+        ->add('plainPassword', RepeatedType::class, [
+            'type' => PasswordType::class
+    ])
+                    </code>
+        </pre>
+
+        <p class="symfony__text">
+            Обратите внимание на namespase:
+        </p>
+
+        <pre class="code-sample">
+                    <code class="php">
+        use Symfony\Component\Form\Extension\Core\Type\EmailType;
+        use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+        use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+                    </code>
+        </pre>
+
+        <p class="symfony__text">
+            <b>RepeatedType</b> продублирует поле ввода пароля для пользователя и сравнит его с оригиналом.
+        </p>
+
+
+    </section>
+
+    <section class="symfony register">
+
+        <h2>Создание контроллера</h2>
+        <p class="symfony__text">
+            Генерируем контроллер
+            <code class="inline-sample execution">php bin/console make:controller</code>.
+            <a class="fancybox" href="img/symfony/register2/generate_controller.jpg">
+                <img class="symfony-image" src="img/symfony/register2/generate_controller.jpg" alt="Local server run">
+            </a>
+            Обновляем action. Многое вам уже знакомо из урока по созданию новости, разве что шифрование пароля в новинку.
+            В этом нам помогает <b>UserPasswordEncoderInterface</b> и его метод <b>encodePassword</b>.
+        </p>
+
+        <pre class="code-sample">
+                    <code class="php">
+    /**
+     * @Route("/register", name="register")
+     */
+    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    {
+        // 1) создаем форму
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+
+        // 2) обрабатываем форму
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // 3) зашифровываем пароль
+            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+            $user->setIsConfirmed(false);
+
+            // 4) сохраняем пользователя
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            // 5) (временно) перенаправляем обратно
+            return $this->redirectToRoute('register');
+        }
+
+        return $this->render(
+            'register/index.html.twig', [
+                'form' => $form->createView()
+            ]
+        );
+    }
+                    </code>
+        </pre>
+
+        <hr>
+
+        <p class="symfony__text">
+            Представление формы пока выведем стандартное, как и в случае с постами.
+            Обновим шаблон <b>index</b> в директории <b>register</b>.
+        </p>
+        <pre class="code-sample">
+          <code class="php">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    < button type="submit">Save< /button>
+    {{ form_end(form) }}
+          </code>
+        </pre>
+
+
+    </section>
+
+
+    <div class="page-nav">
+        <a tabindex="2" href="user.html" class="page-nav__prev" title="Previous page"></a>
+        <!--    <a tabindex="1" href="?lesson=form" class="page-nav__next" title="Nex page"></a>-->
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script>
+
+        var disqus_config = function () {
+            this.page.url = 'https://daniil-solovev.github.io/';
+            this.page.identifier = 'register, part 2';
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://symfony-1.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</main>
+<!--<footer>-->
+<!--    Footer-->
+<!--</footer>-->
+<script src="js/jquery.js"></script>
+<script src="js/jquery.fancybox.pack.js"></script>
+<script src="js/highlight.pack.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

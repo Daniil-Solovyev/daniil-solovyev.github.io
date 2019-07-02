@@ -58,7 +58,7 @@
 
         <p class="symfony__text">
             Для реализации функционала регистрации нам потребуется <b>securityBundle</b>,
-            подключим его с помощью алиаса security - <code class="inline-sample execution">composer require security</code> .
+            подключим его с помощью алиаса security - <code class="inline-sample execution">composer require security</code>.
             Данный бандл представляет из себя очень обширный набор настроек безопасности вашего приложения.
             Например, указание алгоритма шифрования паролей, access_control для доступа по ролям,
             провайдеры данных и многое другое. Мы еще вернемся к безопасность, когда будем настраивать доступы.
@@ -71,7 +71,9 @@
         <pre class="code-sample">
             <code class="php">
     encoders:
-    App\Entity\User: bcrypt
+        App\Entity\User:
+            algorithm: bcrypt
+            cost: 12
             </code>
         </pre>
 
@@ -240,59 +242,9 @@
 
     </section>
 
-<!--    <section class="symfony validation">-->
-<!--        <h2>Валидация</h2>-->
-<!--        <p class="symfony__text">-->
-<!--            Каким бы удобным и интуитивно понятным ни был бы интерфейс, пользователь все равно введет-->
-<!--            в поле email свои паспортные данные, а в пароль с подписью «не менее 7 символов» вставит слово «семь».-->
-<!--            Как им можно верить? - никак, поэтому валидация наше все.-->
-<!--            Поставляется отдельным рецептом - <code class="inline-sample execution">composer require validator</code>.-->
-<!--        </p>-->
-
-<!--        <p class="symfony__text">-->
-<!--            Существует несколько вариантов валидации-->
-<!--            (подробнее <a target="_blank" class="symfony-link" href="https://symfony.ru/doc/current/validation.html">здесь</a>),-->
-<!--            каждый из которых применим под конкретную ситуацию. Мы рассмотрим вариант с валидацией <b>свойств класса</b>,-->
-<!--            как самый простой и удобный в нашем случае.-->
-<!--        </p>-->
-
-<!--        <pre class="code-sample">-->
-<!--        <code class="php">-->
-<!--    class User-->
-<!--    {-->
-<!--        /**-->
-<!--         * @Assert\NotBlank()-->
-<!--         * @Assert\Length(min=3)-->
-<!--         * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")-->
-<!--         * @ORM\Column(type="string", length=255)-->
-<!--         */-->
-<!--        private $email;-->
-<!--    }-->
-<!--        </code>-->
-<!--    </pre>-->
-
-<!--        <p class="symfony__text">-->
-<!--            В примере выше приватному свойству <code class="inline-sample">$email</code> заданы правила валидации:-->
-<!--        </p>-->
-
-<!--        <ul class="enumeration__list">-->
-<!--            <li>-->
-<!--                - <code class="inline-sample">NotBlank()</code> - свойство не может быть пустым;-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                - <code class="inline-sample">Length(min=3)</code> - минимальная длина 3 символа;-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                - <code class="inline-sample">Email</code> - поле должно представлять из себя email адрес.-->
-<!--                В скобках задан аттрибут <code class="inline-sample">message</code>, значением которого будет-->
-<!--                сообщение отображаемое пользователю, если ввод не будет похож на email.-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </section>-->
-
     <div class="page-nav">
         <a tabindex="2" href="refactor_post2.html" class="page-nav__prev" title="Previous page"></a>
-        <!--    <a tabindex="1" href="?lesson=form" class="page-nav__next" title="Nex page"></a>-->
+        <a tabindex="1" href="user2.html" class="page-nav__next" title="Nex page"></a>
     </div>
 
     <div id="disqus_thread"></div>

@@ -75,8 +75,10 @@
             Просто скопируйте css, js, img из архива в данный каталог.
         </p>
 
+        <hr>
+
         <p class="symfony__text">
-            Теперь верстка. Всего будет 5 страниц, шапка и футер одинаковы для всех.
+            Теперь верстка. Всего будет 5 страниц (шапка и футер одинаковы для всех):
         </p>
         <div class="enumeration">
             <ul class="enumeration__list">
@@ -89,8 +91,9 @@
         </div>
 
         <p class="symfony__text">
-            Сейчас нам нужно оставить только общие части шаблона, удалив все лишнее.
-            Попробуйте сначала сделать все самостоятельно. На текущий момент структура должна иметь следующий вид:
+            Сейчас нам нужно оставить только общие части шаблона, удалив все лишнее
+            (попробуйте сначала сделать все самостоятельно).
+            На текущий момент структура должна иметь следующий вид:
             <a class="fancybox" href="img/symfony/twig/layout_without_twig.jpg">
                 <img class="symfony-image" src="img/symfony/twig/layout_without_twig.jpg" alt="">
             </a>
@@ -146,9 +149,10 @@
         </p>
 
         <p class="symfony__text">
-            Давайте повторим. Мы создаем базовый шаблон <code class="inline-sample">base.html.twig</code>, в нем шапка и футер.
-            В <code class="inline-sample">index.html.twig</code> мы подключаем его с помощью директивы extends,
-            переопределяем блок title для конкретной страницы и блок body.
+            Давайте повторим. Мы создали базовый шаблон <code class="inline-sample">base.html.twig</code>,
+            в нем шапка и футер.
+            В <code class="inline-sample">index.html.twig</code> мы подключаем его с помощью директивы <b>extends</b>,
+            далее переопределяем блок <b>title</b> для конкретной страницы и блок <b>body</b>.
             Делаем это с помощью одноименных с базовым шаблоном конструкций
             <code class="inline-sample">{% block title %}</code>
             и <code class="inline-sample">{% block body %}</code>. Напомню, что создавая блоки отличные
@@ -160,24 +164,24 @@
             <ul class="enumeration__list">
                 <li>
                     <p class="twig-container">
-                        <strong>{{ variable }}</strong> – в двойных фигурных скобках выводится значение переменной.
+                        <strong>{{ переменная }}</strong> – в двойных фигурных скобках выводится значение переменной.
                         Обращение к объектам производится через точку, <code class="inline-sample">{{ variable.name }}</code> без знака '$'. <br>
-                        К элементам массива – стандартно через <code class="inline-sample">{{ variable[name] }}</code>.
-                        Если значение с дефисом, то нужно прибегать к конструкции
+                        К элементам массива обращаемся стандартно через квадратные скобки <code class="inline-sample">{{ variable[name] }}</code>.
+                        Если значение представляет из себя строку с дефисом, нужно прибегать к конструкции
                         <code class="inline-sample">{{ attribute(variable, ‘first-name’) }}</code>.
                     </p>
                 </li>
                 <li>
                     <p class="twig-container">
-                        <strong>{% condition %}</strong> – вывод условий, циклов, подключение блоков.
+                        <strong>{% условие %}</strong> – вывод условий, циклов, а так же подключение блоков.
                         Из циклов в twig есть только <b>for</b>, и используется он по аналогии js,
-                        т.е. пишете <code class="inline-sample">for post in posts</code>.
-                        Если требуется ключ – <code class="inline-sample">for key, post in posts</code>.
+                        т.е. пишете <code class="inline-sample">{% for post in posts %}</code>.
+                        Если требуется ключ – <code class="inline-sample">{% for key, post in posts %}</code>.
                     </p>
                 </li>
                 <li>
                     <p class="twig-container">
-                        <strong>{# comment #}</strong> – блок комментариев.
+                        <strong>{# комментарий #}</strong> – блок комментариев.
                     </p>
                 </li>
             </ul>
