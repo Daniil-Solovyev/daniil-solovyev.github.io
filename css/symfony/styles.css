@@ -336,6 +336,7 @@ dl.descriptions-list {
     -webkit-box-flex: 1;
     -ms-flex-positive: 1;
     flex-grow: 1;
+    line-height: 1.5;
     padding: 2px 4px;
     font-size: .94rem;
     border-bottom: 1px solid #f5f2f0;

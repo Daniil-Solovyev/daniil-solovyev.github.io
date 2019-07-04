@@ -245,21 +245,30 @@
 
 
         <h2>Подключение фильтра "truncate"</h2>
+
         <p class="symfony__text">
-            Создаваемые посты могут быть достаточно объемными и лучшей реализацией будет
-            сокращение длины постов в общем списке по 100 символов.
-            Для этого нам потребуются «фильтры» в Twig, своего рода вспомогательные функции.
+            В шаблонизаторе Twig по умолчанию присутствует большое количество
+            <a target="_blank" class="symfony-link" href="https://twig.symfony.com/doc/2.x/filters/index.html">фильтров</a>,
+            которые так или иначе форматируют представление. Для использования фильтров достаточно поставить символ <b>|</b>
+            после переменной, далее имя фильтра. Например, для преобразования текста в верхний регистр нужно добавить <b>upper</b> -
+            <code class="inline-sample">post.body | upper</code>.
+        </p>
+
+        <p class="symfony__text">
+            В нашем случае применить фильтры стоит к создаваемым постам, т.к. их длина может быть достаточно большой.
+            Выставим ограничение, к примеру, до 100 символов. Но для этой цели стандартные фильтры уже не подходят,
+            в помощь нам придут расширения для twig.
         </p>
 
         <div class="enumeration">
             <p class="enumeration__title">Установка:</p>
             <ul class="enumeration__list">
                 <li>- подключаем библиотеку <code class="inline-sample execution">composer require twig/extensions</code>.
-                    Здесь, как видно, Symfony Flex уже не используется.
+                    Как видно, Symfony Flex уже не используется.
                 </li>
                 <li>
                     - регистрируем расширение "text extension" из вышеуказаной библиотеки в сервисах.
-                    Для этого переходим в папку config, открываем services.yaml и добавляем туда следующий код:
+                    Для этого переходим в папку <b>config</b>, открываем <b>services.yaml</b> и добавляем туда следующий код:
 
                     <pre class="code-sample">
                     <code class="php">
@@ -271,7 +280,7 @@
                     </code>
                 </pre>
 
-                    Выглядит это так:
+                    Что должно получиться:
                     <a class="fancybox" href="img/symfony/twig/text_extension.jpg">
                         <img class="symfony-image" src="img/symfony/twig/text_extension.jpg" alt="">
                     </a>
@@ -280,8 +289,8 @@
                     - применим фильтр к шаблону <code class="inline-sample">index.html.twig</code>, изменив <code class="inline-sample">post.title</code>,
                     <code class="inline-sample">post.body</code> на <code class="inline-sample">post.title | truncate(50, true)</code>,
                     <code class="inline-sample">post.body | truncate(100, true)</code> соответственно.
-                    Для проверки просто изменим массив $posts в контроллере
-                    PostController увеличив длину <code class="inline-sample">body</code> до 100+ символов.
+                    Для проверки работоспособности просто изменим массив <b>$posts</b> в контроллере
+                    <b>PostController</b> увеличив длину <code class="inline-sample">body</code> до 100+ символов.
                     Проверяем:
                     <a class="fancybox" href="img/symfony/twig/truncate.jpg">
                         <img class="symfony-image" src="img/symfony/twig/truncate.jpg" alt="">
@@ -291,7 +300,7 @@
         </div>
 
         <p class="postscriptum">
-            Лично у меня каждый раз возникала ошибка после подключения данного расширения.
+            Лично у меня возникала ошибка после подключения данного расширения.
             Решалась проблема с помощью очистки кеша <code class="inline-sample">php bin/console cache:clear</code>.
         </p>
 
