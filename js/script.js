@@ -1,4 +1,8 @@
 $(document).ready(function () {
+
+    /**
+     * Увеличение изображений
+     */
     $('.fancybox').fancybox({
         helpers : {
             overlay: {
@@ -7,8 +11,69 @@ $(document).ready(function () {
         }
     });
 
+
+    /**
+     * Подсветка синтаксиса
+     */
     hljs.configure({tabReplace: '   '});
     hljs.initHighlighting();
+
+
+    /**
+     * Модалка
+     */
+    if (getCookie('readModal') === undefined) {
+        $('#modal-container').css('display', 'table');
+    }
+    $('#modal-container').click(function(){
+        setCookie('readModal', true, {secure: true});
+        $(this).addClass('out');
+        $('#modal-container').remove();
+    });
+
+
+
+    /**
+     *
+     * @param name
+     * @returns {any}
+     */
+    function getCookie(name) {
+        let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    /**
+     *
+     * @param name
+     * @param value
+     * @param options
+     */
+    function setCookie(name, value, options = {}) {
+
+        options = {
+            path: '/',
+            expires: 'Tue, 30 Jan 2030 03:03:03 GMT'
+        };
+
+        if (options.expires instanceof Date) {
+            options.expires = options.expires.toUTCString();
+        }
+
+        let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+        for (let optionKey in options) {
+            updatedCookie += "; " + optionKey;
+            let optionValue = options[optionKey];
+            if (optionValue !== true) {
+                updatedCookie += "=" + optionValue;
+            }
+        }
+
+        document.cookie = updatedCookie;
+    }
 });
 
 

@@ -493,6 +493,114 @@ dl.descriptions-list {
     padding: 0 10px;
 }
 
+
+/*modal*/
+#modal-container {
+    position: fixed;
+    display: none;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    transform: scale(0);
+    z-index: 999;
+}
+#modal-container.star-modal {
+    transform: scale(1);
+}
+#modal-container.star-modal .modal-background {
+    background: rgba(0, 0, 0, 0);
+    animation: fadeIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+#modal-container.star-modal .modal-background .modal {
+    opacity: 0;
+    animation: scaleUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+#modal-container.star-modal + .content {
+    animation: scaleBack 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+#modal-container.star-modal.out {
+    animation: quickScaleDown 0s .5s linear forwards;
+}
+#modal-container.star-modal.out .modal-background {
+    animation: fadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+#modal-container.star-modal.out .modal-background .modal {
+    animation: scaleDown 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+#modal-container.star-modal.out + .content {
+    animation: scaleForward 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+#modal-container .modal-background {
+    display: table-cell;
+    background: rgba(0, 0, 0, 0.8);
+    text-align: center;
+    vertical-align: middle;
+}
+#modal-container .modal-background .modal {
+    max-width: 900px;
+    background: white;
+    padding: 50px;
+    display: inline-block;
+    border-radius: 3px;
+    font-weight: 300;
+    position: relative;
+}
+#modal-container .modal-background .modal h2 {
+    font-size: 25px;
+    line-height: 25px;
+    margin-bottom: 15px;
+}
+#modal-container .modal-background .modal p {
+    font-size: 18px;
+    line-height: 22px;
+}
+@keyframes fadeIn {
+    0% {
+        background: rgba(0, 0, 0, 0);
+    }
+    100% {
+        background: rgba(0, 0, 0, 0.7);
+    }
+}
+@keyframes fadeOut {
+    0% {
+        background: rgba(0, 0, 0, 0.7);
+    }
+    100% {
+        background: rgba(0, 0, 0, 0);
+    }
+}
+@keyframes scaleUp {
+    0% {
+        transform: scale(0.8) translateY(1000px);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) translateY(0px);
+        opacity: 1;
+    }
+}
+@keyframes scaleDown {
+    0% {
+        transform: scale(1) translateY(0px);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.8) translateY(1000px);
+        opacity: 0;
+    }
+}
+@keyframes scaleBack {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0.85);
+    }
+}
+
+
 @media (max-width: 1600px) {
     .page-nav {
         display: -webkit-box;
@@ -532,6 +640,7 @@ dl.descriptions-list {
     }
 
     .logo {
+        display: none;
         padding: 0;
         width: 100%;
         text-align: center;
@@ -546,7 +655,12 @@ dl.descriptions-list {
     }
 
     .main-nav__link {
+        font-size: 1.2rem;
         font-weight: 400;
+    }
+
+    .themes-list a {
+        font-size: 1.1rem;
     }
 
     .page-nav {
@@ -575,7 +689,7 @@ dl.descriptions-list {
     }
 
     .symfony__text, .postscriptum {
-        text-align: justify;
+        /*text-align: justify;*/
     }
 
     .breadcrumbs__item:not(:last-child):after {
@@ -593,4 +707,8 @@ dl.descriptions-list {
     .before-install__installer {
         padding-left: 0;
     }
+    #modal-container .modal-background .modal {
+        padding: 20px;
+    }
 }
+

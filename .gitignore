@@ -4,3 +4,4 @@
 *.xml___jb_tmp___
 *.xml
 .idea/workspace.xml
+.gitignore
