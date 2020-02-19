@@ -1,7 +1,5 @@
-
 *.iml
 *.xml
 *.xml___jb_tmp___
-*.xml
-.idea/workspace.xml
+.idea/
 .gitignore
